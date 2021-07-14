@@ -5,11 +5,7 @@ import "fmt"
 /*************************** 对外暴露 ***********************************/
 // 接口
 type IGun interface {
-	GetName() string
-	GetPower() int
-
-	setName(name string)
-	setPower(power int)
+	Fire()
 }
 
 // 工厂
@@ -32,24 +28,12 @@ type gun struct {
 	power int
 }
 
-func (g *gun) GetName() string {
-	return g.name
-}
-
-func (g *gun) GetPower() int {
-	return g.power
-}
-
-func (g *gun) setName(name string) {
-	g.name = name
-}
-
-func (g *gun) setPower(power int) {
-	g.power = power
-}
-
 type ak47 struct {
 	gun
+}
+
+func (g *ak47) Fire() {
+	fmt.Println("AK47 fire power:", g.power)
 }
 
 func newAk47() *ak47 {
@@ -61,7 +45,10 @@ type musket struct {
 	gun
 }
 
+func (g *musket) Fire() {
+	fmt.Println("Musket fire power:", g.power)
+}
+
 func newMusket() *musket {
 	return &musket{gun{name: "Musket gun", power: 1}}
-
 }

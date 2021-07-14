@@ -1,6 +1,14 @@
 package factory
 
-func NewMatrix() *matrix {
-	m := new(matrix) // 初始化 m
-	return m
+import (
+	"fmt"
+	"testing"
+)
+
+func TestHelloName(t *testing.T) {
+	fmt.Println("TestHelloName")
+}
+
+func TestHelloEmpty(t *testing.T) {
+	fmt.Println("TestHelloEmpty")
 }
