@@ -39,6 +39,21 @@ func main() {
 		fmt.Printf("dynamic value of 't' with value  %T %v %v\n", t, t, ok)
 		fmt.Printf("'t' is %T-%p-%p\n", t, &t, t)
 	} else {
-		fmt.Printf("dynamic value of 't' with value  %T %v %v\n", t, t, ok)
+		fmt.Printf("dynamic value of 't' without value  %T %v %v\n", t, t, ok)
 	}
+
+	/* 	if t, ok := any.(*Square); ok {
+	   		fmt.Printf("dynamic value of 't' with value  %T %v %v\n", t, t, ok)
+	   		fmt.Printf("'t' is %T-%p-%p\n", t, &t, t)
+	   	} else {
+	   		fmt.Printf("dynamic value of 't' without value  %T %v %v\n", t, t, ok)
+	   	}
+
+	   	if t, ok := any.(*Circle); ok {
+	   		fmt.Printf("dynamic value of 't' with value  %T %v %v\n", t, t, ok)
+	   		fmt.Printf("'t' is %T-%p-%p\n", t, &t, t)
+	   	} else {
+	   		fmt.Printf("dynamic value of 't' without value  %T %v %v\n", t, t, ok)
+	   	} */
+
 }
