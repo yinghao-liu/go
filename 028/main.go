@@ -12,12 +12,21 @@ func producer(ch chan int) {
 	}
 }
 
-func customer(flag int, ch chan int) {
+func customer1(flag int, ch chan int) {
 	for {
 		data := <-ch
-		fmt.Println(flag, "---customer---", data)
+		fmt.Println(flag, "---customer1---", data)
 		time.Sleep(1e9)
 	}
+}
+
+// for-range and channel
+func customer2(flag int, ch chan int) {
+	for i := range ch {
+		fmt.Println(flag, "---customer2---", i)
+		time.Sleep(1e9)
+	}
+	fmt.Println("---customer2--- channel may be closed")
 }
 
 /*
@@ -30,11 +39,14 @@ func main() {
 	time.Sleep(1e9)
 
 	// create two customers
-	go customer(1, ch)
-	go customer(2, ch)
-	go customer(3, ch)
+	go customer1(1, ch)
+	go customer1(2, ch)
+	go customer2(3, ch)
+	go customer2(4, ch)
 
-	for {
-		time.Sleep(10)
-	}
+	time.Sleep(10e9)
+	close(ch)
+	fmt.Println("close channel")
+	time.Sleep(10e9)
+
 }
