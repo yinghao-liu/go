@@ -6,15 +6,20 @@ import (
 )
 
 func producer(ch chan int) {
-	for i := 0; ; i++ {
-		fmt.Println("producer------", i)
+	defer close(ch)
+	for i := 0; i < 20; i++ {
 		ch <- i
+		fmt.Println("producer------", i)
 	}
 }
 
 func customer1(flag int, ch chan int) {
 	for {
-		data := <-ch
+		data, ok := <-ch
+		if !ok {
+			fmt.Println(flag, "---customer1--- channel may be closed")
+			break
+		}
 		fmt.Println(flag, "---customer1---", data)
 		time.Sleep(1e9)
 	}
@@ -26,7 +31,7 @@ func customer2(flag int, ch chan int) {
 		fmt.Println(flag, "---customer2---", i)
 		time.Sleep(1e9)
 	}
-	fmt.Println("---customer2--- channel may be closed")
+	fmt.Println(flag, "---customer2--- channel may be closed")
 }
 
 /*
@@ -45,8 +50,7 @@ func main() {
 	go customer2(4, ch)
 
 	time.Sleep(10e9)
-	close(ch)
-	fmt.Println("close channel")
+
 	time.Sleep(10e9)
 
 }
