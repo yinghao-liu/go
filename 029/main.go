@@ -11,7 +11,7 @@ func badCall() {
 func test() {
 	defer func() {
 		if e := recover(); e != nil {
-			fmt.Printf("Panicing %s\r\n", e)
+			fmt.Printf("Panicing %s\r\n", e) // no stacks
 		}
 	}()
 	badCall()
