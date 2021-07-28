@@ -1,9 +1,5 @@
 # go
 test go feature
-## Design Patterns
-### 创建型模式（Creational Patterns）
-#### 001 [工厂模式（Factory Method）](001)
-
 
 ## test
 ### language feature
@@ -12,8 +8,9 @@ test go feature
 #### 029 [defer-panic-recover](029)
 
 ### packages
-#### 100 [](100)
+#### 100 [url](100)
 
-### applications
+## applications
 #### 200 [postman collection json parser](200)
+#### 201 [Simple Factory](201)
 
