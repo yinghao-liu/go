@@ -13,4 +13,5 @@ test go feature
 ## applications
 #### 200 [postman collection json parser](200)
 #### 201 [Simple Factory](201)
+#### 202 [http server through gin](202)
 
