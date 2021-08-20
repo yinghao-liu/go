@@ -1,0 +1,236 @@
+openapi: '3.0.0'
+info:
+  title: 文件上传下载
+  version: '1.0'
+  description: refer to [RESTful API规范](https://www.tapd.cn/55029896/markdown_wikis/show/#1155029896001034510)
+servers:
+  - url: http://api.server.test/v1
+paths:
+  /: 
+    get: 
+      tags:
+        - 登录
+      summary: get login html
+      description: 获取登录页面
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html: 
+              schema: 
+                title: login.html
+                type: string
+                description: 登录页面
+  /login:               
+    post:
+      tags:
+        - 登录
+      summary: login
+      description: 登录操作，获取token
+      requestBody: 
+        description: aa 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+              properties: 
+                username: 
+                  type: string
+                password: 
+                  type: string
+      responses: 
+        200: 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/Response'
+
+  /v1/files:
+    get: 
+      tags:
+        - 文件操作
+      summary: get file lists
+      description: 获取文件列表
+      parameters: 
+        - $ref: '#/components/parameters/Auth'
+
+      responses: 
+        200: 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                type: object
+                properties: 
+                  fileList: 
+                    type: array
+                    items: 
+                      $ref: '#/components/schemas/FileInfo'
+
+
+                      
+
+
+  
+  /v1/files/{filename}: 
+      get: 
+        tags:
+          - 文件操作
+        summary: download file content
+        description: 获取文件列表
+        parameters: 
+          - $ref: '#/components/parameters/Auth'
+          - name: filename
+            in: path
+            description: 文件名
+            required: true
+        
+        responses: 
+          200: 
+            description: OK
+            content:
+              application/octet-stream:
+              # any media type is accepted, functionally equivalent to `*/*`
+                schema:
+                  # a binary file of any type
+                  type: string
+                  format: binary
+
+      post: 
+        tags:
+          - 文件操作
+        summary: upload file content
+        description: 上传文件
+        parameters: 
+          - $ref: '#/components/parameters/Auth'
+          - name: filename
+            in: path
+            description: 文件名
+            required: true
+        
+        responses: 
+          200: 
+            description: OK
+      
+      delete: 
+        tags:
+          - 文件操作
+        summary: delete file
+        description: 获取文件列表
+        parameters: 
+          - $ref: '#/components/parameters/Auth'
+          - name: filename
+            in: path
+            description: 文件名
+            required: true
+        
+        responses: 
+          200: 
+            description: OK
+           
+
+
+components: 
+  schemas: 
+    Response: 
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data: 
+          type: object
+      # Both properties are required
+      required:  
+        - code
+        - message
+    FileInfo: 
+      properties:
+        filename:
+          type: string
+        size:
+          type: integer
+        modTime: 
+          type: string
+      # Both properties are required
+      required:  
+        - code
+        - message
+
+  parameters: 
+    Auth:  
+      name: Authorization
+      in: head
+      description: jwt-auth TOKEN
+      required: true
+      schema: 
+        type: string
+
+#  content:
+#     application/octet-stream:
+#       # any media type is accepted, functionally equivalent to `*/*`
+#       schema:
+#         # a binary file of any type
+#         type: string
+#         format: binary
+
+# components:
+#   schemas:
+#     Category:
+#       type: object
+#       properties:
+#         id:
+#           type: integer
+#           format: int64
+#         name:
+#           type: string
+#     Tag:
+#       type: object
+#       properties:
+#         id:
+#           type: integer
+#           format: int64
+#         name:
+#           type: string
+#   parameters:
+#     skipParam:
+#       name: skip
+#       in: query
+#       description: number of items to skip
+#       required: true
+#       schema:
+#         type: integer
+#         format: int32
+#     limitParam:
+#       name: limit
+#       in: query
+#       description: max records to return
+#       required: true
+#       schema:
+#         type: integer
+#         format: int32
+#   responses:
+#     NotFound:
+#       description: Entity not found.
+#     IllegalInput:
+#       description: Illegal input for operation.
+#     GeneralError:
+#       description: General Error
+#       content:
+#         application/json:
+#           schema:
+#             $ref: '#/components/schemas/GeneralError'
+#   securitySchemes:
+#     api_key:
+#       type: apiKey
+#       name: api_key
+#       in: header
+#     petstore_auth:
+#       type: oauth2
+#       flows: 
+#         implicit:
+#           authorizationUrl: http://example.org/api/oauth/dialog
+#           scopes:
+#             write:pets: modify pets in your account
+#             read:pets: read your pets
