@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -55,28 +57,57 @@ func fileGetHandle(c *gin.Context) {
 }
 
 func filePostHandle(c *gin.Context) {
-	respSend := make(map[string]interface{})
-	if a, err := os.ReadDir("resource"); nil == err {
-		number := len(a)
-		filesInfo := make([]FileInfo, number)
+	// form, _ := c.MultipartForm()
+	// files := form.File["upload[]"]
 
-		for i, v := range a {
-			fmt.Println(v.Name())
-			filesInfo[i].Name = v.Name()
-			if info, err := v.Info(); nil == err {
-				fmt.Printf("%v-%v-%v\n", info.Name(), info.Size(), info.ModTime())
-				filesInfo[i].Size = info.Size()
-				filesInfo[i].ModTime = info.ModTime().String()
-			}
-		}
-		fmt.Println(filesInfo)
-		respSend["code"] = ErrorCodeOK
-		respSend["message"] = ""
-		respSend["data"] = filesInfo
+	// for _, file := range files {
+	// 	log.Println(file.Filename)
+
+	// 	// Upload the file to specific dst.
+	// 	c.SaveUploadedFile(file, dst)
+	// }
+	// c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
+	name := c.Param("filename")
+	fullpath := "resource/" + name
+	fmt.Printf("name is %v\n", fullpath)
+
+	respSend := make(map[string]interface{})
+	contentLenStr := c.GetHeader("Content-Length")
+	fmt.Printf("Content-Length is %v\n", contentLenStr)
+	var contentLen int
+	if contentLen, err := strconv.Atoi(contentLenStr); nil == err {
+		fmt.Printf("%v\n", contentLen)
+	}
+	var content = make([]byte, contentLen)
+	var err error
+	if content, err = c.GetRawData(); nil == err {
+		fmt.Printf("%v\n", content)
 	} else {
+		fmt.Println(err)
+	}
+
+	if file, err := os.OpenFile(fullpath, os.O_RDWR|os.O_CREATE, 0755); err != nil {
+		log.Fatal(err)
 		respSend["code"] = ErrorCodeFiles
 		respSend["message"] = err.Error()
+	} else {
+		defer file.Close()
+		if writeLen, err := file.Write(content); nil == err {
+			fmt.Printf("writeLen: %v\n", writeLen)
+			if writeLen != contentLen {
+				respSend["code"] = ErrorCodeFiles
+				respSend["message"] = fmt.Sprintf("writeLen not match wirten:%v, source:%v", writeLen, contentLen)
+			} else {
+				respSend["code"] = ErrorCodeOK
+				respSend["message"] = ""
+			}
+
+		} else {
+			respSend["code"] = ErrorCodeFiles
+			respSend["message"] = err.Error()
+		}
 	}
+
 	c.JSON(http.StatusOK, respSend)
 }
 
