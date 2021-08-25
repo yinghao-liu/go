@@ -33,6 +33,7 @@ paths:
         content: 
           application/json: 
             schema: 
+              type: object
               properties: 
                 username: 
                   type: string
@@ -45,6 +46,8 @@ paths:
             application/json: 
               schema: 
                 $ref: '#/components/schemas/Response'
+                dataa: 
+                  type: string
 
   /v1/files:
     get: 

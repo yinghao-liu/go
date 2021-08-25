@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onload="getFileList()">
+    <form onsubmit="uploadFiles()" id="fileSubmit">
+        上传文件: <input type="file" multiple id="fileInput">
+        <input type="submit" value="提交">
+    </form>
+    <br>
+    <hr>
+    <button onclick="getFileList()">刷新</button>
+    <table id="fileList">
+        <caption>文件列表</caption>
+        <thead>
+            <tr>
+                <th>文件名</th>
+                <th>文件大小(字节)</th>
+                <th>文件修改时间</th>
+                <th>下载</th>
+                <th>删除</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr>
+                <td>filenfsfame</td>
+                <td>1024dddddddddddddddddd</td>
+                <td>昨天</td>
+                <td><button onclick="downloadFile(this.name)" name="filenfsfame">下载</button></td>
+                <td><button onclick="deleteFile(this.name)" name="filenfsfame">删除</button></td>
+            </tr>
+        </tbody>
+
+    </table>
+
+
+    <!-- 脚本 -->
+    <script>
+        const filesV1 = "/v1/files/"
+        function getFileList() {
+            // 检索
+            token = sessionStorage.getItem("Authorization");
+            console.log(token)
+            var myHeaders = new Headers();
+            myHeaders.append('Authorization', token);
+
+            var myInit = {
+                method: 'GET',
+                headers: myHeaders,
+            };
+
+            var myRequest = new Request(filesV1);
+
+            fetch(myRequest, myInit)
+                .then(fileListResponse)
+                .then(load)
+                .catch(e => console.log("Oops, error", e))
+
+        }
+        function fileListResponse(response) {
+            if (401 === response.status) {
+                newHost = window.location.host
+                window.location.href = "http://" + newHost;
+            }
+            return response.json()
+        }
+
+        function load(listJSON) {
+            var fileList = document.getElementById("tbody");
+            var children = fileList.children;
+
+            if (0 === listJSON.code) {
+                for (i = children.length; i > 0; i--) {
+                    fileList.removeChild(children[i - 1])
+                }
+
+                for (i in listJSON.data) {
+                    let tr = document.createElement("tr");
+
+                    let tdFilename = document.createElement("td");
+                    tdFilename.innerHTML = listJSON.data[i].Name
+                    tr.appendChild(tdFilename);
+
+                    let tdSize = document.createElement("td");
+                    tdSize.innerHTML = listJSON.data[i].Size
+                    tr.appendChild(tdSize);
+
+                    let tdTime = document.createElement("td");
+                    tdTime.innerHTML = listJSON.data[i].ModTime;
+                    tr.appendChild(tdTime);
+
+                    let tdDownload = document.createElement("td");
+                    let buttonDownload = document.createElement("button");
+                    buttonDownload.innerHTML = "下载";
+                    let attr = document.createAttribute("onclick");
+                    attr.nodeValue = "downloadFile(this.name)";
+                    buttonDownload.attributes.setNamedItem(attr);
+                    attr = document.createAttribute("name");
+                    attr.nodeValue = listJSON.data[i].Name;
+                    buttonDownload.attributes.setNamedItem(attr);
+                    tdDownload.appendChild(buttonDownload)
+                    tr.appendChild(tdDownload);
+
+                    let tdDelete = document.createElement("td");
+                    let buttonDelete = document.createElement("button");
+                    buttonDelete.innerHTML = "删除";
+                    attr = document.createAttribute("onclick");
+                    attr.nodeValue = "deleteFile(this.name)";
+                    buttonDelete.attributes.setNamedItem(attr);
+                    attr = document.createAttribute("name");
+                    attr.nodeValue = listJSON.data[i].Name;
+                    buttonDelete.attributes.setNamedItem(attr);
+                    tdDelete.appendChild(buttonDelete)
+                    tr.appendChild(tdDelete);
+
+                    fileList.appendChild(tr);
+                }
+
+            } else {
+                alert("wrong------------------!" + listJSON.message)
+            }
+
+        }
+
+        function uploadFiles() {
+            event.preventDefault()
+            var fileInput = document.forms["fileSubmit"]["fileInput"]
+            var files = fileInput.files
+            console.log("lengthis: " + files.length);
+            if (files.length < 1) {
+                alert("non file selected!!!!!!");
+                return;
+            }
+
+            // 检索
+            token = sessionStorage.getItem("Authorization");
+            console.log(token)
+            var myHeaders = new Headers();
+            myHeaders.append('Authorization', token);
+            myHeaders.append('Content-Type', "application/octet-stream");
+
+            var myInit = {
+                method: 'POST',
+                headers: myHeaders,
+            };
+
+            for (let i = 0; i < files.length; i++) {
+                console.log("i is: " + i);
+                console.log(files[i].name);
+                console.log(files[i].size);
+                console.log(files[i].type);
+
+                let reader = new FileReader();
+                let uri = "/v1/files/" + files[i].name
+                let myRequest = new Request(uri);
+                reader.onload = function (evt) {
+                    myInit.body = reader.result;
+
+                    fetch(myRequest, myInit)
+                        .then(fileListResponse)
+                        .then(resJSON => console.log(resJSON))
+                        .catch(e => console.log("Oops, error", e))
+                };
+                reader.readAsArrayBuffer(files[i])
+            }
+        }
+        function downloadFile(fileName) {
+            alert(fileName);
+            // 检索
+            token = sessionStorage.getItem("Authorization");
+            console.log(token)
+            var myHeaders = new Headers();
+            myHeaders.append('Authorization', token);
+
+            var myInit = {
+                method: 'GET',
+                headers: myHeaders,
+            };
+            var uri = filesV1 + fileName;
+            console.log(uri);
+            var myRequest = new Request(uri);
+
+
+
+            // var reader = new FileReader();
+            // reader.addEventListener("loadend", function () {
+            //     // reader.result 包含被转化为类型数组 typed array 的 blob
+            // });
+            // reader.readAsArrayBuffer(blob);
+
+            function fileListResponse(response) {
+                if (401 === response.status) {
+                    newHost = window.location.host
+                    window.location.href = "http://" + newHost;
+                }
+                return response.json()
+            }
+
+            fetch(myRequest, myInit)
+                .then(function (response) {
+                    if (401 === response.status) {
+                        index = window.location.host
+                        window.location.href = "http://" + index;
+                        return
+                    }
+                    return response.blob()
+                })
+                .then(blob => saveAs())
+                .catch(e => console.log("Oops, error", e))
+
+        }
+
+        function deleteFile(fileName) {
+            alert(fileName);
+            // 检索
+            token = sessionStorage.getItem("Authorization");
+            console.log(token)
+            var myHeaders = new Headers();
+            myHeaders.append('Authorization', token);
+
+            var myInit = {
+                method: 'DELETE',
+                headers: myHeaders,
+            };
+            var uri = filesV1 + fileName;
+            console.log(uri);
+            var myRequest = new Request(uri);
+
+            fetch(myRequest, myInit)
+                .then(fileListResponse)
+                .then(resJSON => console.log(resJSON))
+                .catch(e => console.log("Oops, error", e))
+        }
+    </script>
+</body>
+
+</html>
