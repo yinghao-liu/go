@@ -17,16 +17,19 @@
 
     <script>
         function loadUpdownloadHtml(tokenJSON) {
-            if (0 === tokenJSON.code) {
-                sessionStorage.setItem("Authorization", tokenJSON.data.token);
-                newHost = window.location.host
-                window.location.href = "http://" + newHost + "/updownload.html";
-            } else {
-                alert("wrong------------------!" + tokenJSON.message)
-            }
-
+            sessionStorage.setItem("Authorization", tokenJSON.token);
+            newHost = window.location.host
+            window.location.href = "http://" + newHost + "/updownload.html";
         }
 
+        function statusCheck(response) {
+            if (200 !== response.status) {
+                newHost = window.location.host
+                window.location.href = "http://" + newHost;
+            } else {
+                return response.json()
+            }
+        }
         function login() {
             var username = document.forms["login"]["username"].value;
             var password = document.forms["login"]["password"].value;
@@ -36,7 +39,7 @@
             var myJSON = JSON.stringify(msg);
             console.log(myJSON);
             fetch("/login", { method: 'POST', body: myJSON })
-                .then(response => response.json())
+                .then(statusCheck)
                 .then(loadUpdownloadHtml)
                 .catch(e => console.log("Oops, error", e))
         }
