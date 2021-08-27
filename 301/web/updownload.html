@@ -41,6 +41,7 @@
 
 
     <!-- 脚本 -->
+    <script src="script/FileSaver.min.js"></script>
     <script>
         const filesV1 = "/v1/files/"
         function getFileList() {
@@ -207,11 +208,10 @@
                     if (401 === response.status) {
                         index = window.location.host
                         window.location.href = "http://" + index;
-                        return
                     }
                     return response.blob()
                 })
-                .then(blob => saveAs())
+                .then(blob => saveAs(blob, fileName))
                 .catch(e => console.log("Oops, error", e))
 
         }

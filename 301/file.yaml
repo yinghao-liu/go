@@ -4,7 +4,8 @@ info:
   version: '1.0'
   description: refer to [RESTful API规范](https://www.tapd.cn/55029896/markdown_wikis/show/#1155029896001034510)
 servers:
-  - url: http://api.server.test/v1
+  - url: http://172.16.193.118:8000
+  - url: http://172.16.193.118:8001
 paths:
   /: 
     get: 
@@ -12,6 +13,7 @@ paths:
         - 登录
       summary: get login html
       description: 获取登录页面
+      deprecated: true
       responses:
         '200':
           description: OK

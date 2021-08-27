@@ -27,7 +27,7 @@ type AuthInfo struct {
 }
 
 // TODO 全局变量是否可用 以及命名规则 规范:可变全局变量尽量不用
-var users = map[string]string{"francis": "francis"}
+var users = map[string]string{"francis": "francis", "test": "test"}
 
 func checkUser(name string, password string) bool {
 	if user, ok := users[name]; ok {
@@ -39,18 +39,22 @@ func checkUser(name string, password string) bool {
 }
 
 // TODO 需要类似do while 效果
+// TODO 出错需要返回HTTP错误码 各种错误如何对应？
 func loginHandle(c *gin.Context) {
 	var json Login
+	var code int
 	respSend := make(map[string]interface{})
 	for {
 		// 将request的body中的数据，自动按照json格式解析到结构体
 		if err := c.ShouldBindJSON(&json); err != nil {
+			code = http.StatusBadRequest
 			respSend["code"] = ErrorCodeJsonData
 			respSend["message"] = err.Error()
 			break
 		}
 		// 判断用户名密码是否正确
 		if !checkUser(json.Username, json.Password) {
+			code = http.StatusBadRequest
 			respSend["code"] = ErrorCodeUserCheck
 			respSend["message"] = "user check error"
 			break
@@ -58,15 +62,16 @@ func loginHandle(c *gin.Context) {
 		// 获取JWT-TOKEN
 		jwt := fmt.Sprintf("http://192.168.147.132:9080/apisix/plugin/jwt/sign?key=%v", json.Username)
 		if resp, err := http.Get(jwt); nil != err {
+			code = http.StatusNotFound
 			respSend["code"] = ErrorCodeAuthInfo
 			respSend["message"] = err.Error()
 		} else {
 			defer resp.Body.Close()
 			if body, err := io.ReadAll(resp.Body); nil == err {
-				respSend["code"] = ErrorCodeOK
-				respSend["message"] = ""
-				respSend["data"] = AuthInfo{Token: string(body)}
+				code = http.StatusOK
+				respSend["token"] = string(body)
 			} else {
+				code = http.StatusBadRequest
 				respSend["code"] = ErrorCodeAuthInfo
 				respSend["message"] = err.Error()
 			}
@@ -75,12 +80,12 @@ func loginHandle(c *gin.Context) {
 		break
 	}
 	fmt.Println(respSend)
-	c.JSON(http.StatusOK, respSend)
+	c.JSON(code, respSend)
 }
 
 func loadRoute(e *gin.Engine) {
-	e.StaticFile("/", "index.html")
-	e.StaticFile("/updownload.html", "updownload.html")
+	e.StaticFile("/", "web/index.html")
+	e.StaticFile("/updownload.html", "web/updownload.html")
 	e.POST("/login", loginHandle)
 }
 
