@@ -25,6 +25,7 @@ type FileInfo struct {
 }
 
 func filesHandle(c *gin.Context) {
+	var code int = http.StatusOK
 	respSend := make(map[string]interface{})
 	if a, err := os.ReadDir("resource"); nil == err {
 		filesInfo := make([]FileInfo, len(a))
@@ -38,14 +39,13 @@ func filesHandle(c *gin.Context) {
 			}
 		}
 		fmt.Println(filesInfo)
-		respSend["code"] = ErrorCodeOK
-		respSend["message"] = ""
-		respSend["data"] = filesInfo
+		respSend["fileList"] = filesInfo
 	} else {
+		code = http.StatusBadRequest
 		respSend["code"] = ErrorCodeFiles
 		respSend["message"] = err.Error()
 	}
-	c.JSON(http.StatusOK, respSend)
+	c.JSON(code, respSend)
 }
 
 func fileGetHandle(c *gin.Context) {
@@ -53,6 +53,7 @@ func fileGetHandle(c *gin.Context) {
 	fullpath := "resource/" + name
 	fmt.Printf("name is %v\n", fullpath)
 	c.Header("Content-Type", "application/octet-stream")
+	//c.Header("Content-Disposition", "attachment; filename="+name)
 	c.File(fullpath)
 }
 
@@ -68,61 +69,76 @@ func filePostHandle(c *gin.Context) {
 	// }
 	// c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
 	name := c.Param("filename")
+	var code int = http.StatusOK
+	var contentLen int
+	var err error
 	fullpath := "resource/" + name
 	fmt.Printf("name is %v\n", fullpath)
 
 	respSend := make(map[string]interface{})
 	contentLenStr := c.GetHeader("Content-Length")
 	fmt.Printf("Content-Length is %v\n", contentLenStr)
-	var contentLen int
-	if contentLen, err := strconv.Atoi(contentLenStr); nil == err {
-		fmt.Printf("%v\n", contentLen)
+
+	if contentLen, err = strconv.Atoi(contentLenStr); nil == err {
+		fmt.Printf("contentLen is %v\n", contentLen)
 	}
 	var content = make([]byte, contentLen)
-	var err error
-	if content, err = c.GetRawData(); nil == err {
-		fmt.Printf("%v\n", content)
-	} else {
+	if content, err = c.GetRawData(); nil != err {
 		fmt.Println(err)
+		code = http.StatusBadRequest
+		respSend["code"] = ErrorCodeFiles
+		respSend["message"] = err.Error()
+		return
 	}
-
 	if file, err := os.OpenFile(fullpath, os.O_RDWR|os.O_CREATE, 0755); err != nil {
 		log.Fatal(err)
+		code = http.StatusBadRequest
 		respSend["code"] = ErrorCodeFiles
 		respSend["message"] = err.Error()
 	} else {
 		defer file.Close()
-		if writeLen, err := file.Write(content); nil == err {
+		if writeLen, err := file.Write(content); nil != err {
+			code = http.StatusBadRequest
+			respSend["code"] = ErrorCodeFiles
+			respSend["message"] = err.Error()
+		} else {
 			fmt.Printf("writeLen: %v\n", writeLen)
+			fmt.Printf("contentLen: %v\n", contentLen)
 			if writeLen != contentLen {
+				code = http.StatusBadRequest
 				respSend["code"] = ErrorCodeFiles
 				respSend["message"] = fmt.Sprintf("writeLen not match wirten:%v, source:%v", writeLen, contentLen)
 			} else {
-				respSend["code"] = ErrorCodeOK
-				respSend["message"] = ""
+				code = http.StatusCreated
 			}
-
-		} else {
-			respSend["code"] = ErrorCodeFiles
-			respSend["message"] = err.Error()
 		}
 	}
 
-	c.JSON(http.StatusOK, respSend)
+	if http.StatusCreated != code {
+		c.JSON(code, respSend)
+	} else {
+		c.Status(code)
+	}
 }
 
 func fileDeleteHandle(c *gin.Context) {
+	var code int = http.StatusOK
 	respSend := make(map[string]interface{})
 	name := c.Param("filename")
 	fullpath := "resource/" + name
 	fmt.Printf("name is %v\n", fullpath)
-	respSend["code"] = ErrorCodeOK
-	respSend["message"] = ""
+
 	if err := os.Remove(fullpath); nil != err {
+		code = http.StatusBadRequest
 		respSend["code"] = ErrorCodeFiles
 		respSend["message"] = err.Error()
 	}
-	c.JSON(http.StatusOK, respSend)
+
+	if http.StatusOK != code {
+		c.JSON(code, respSend)
+	} else {
+		c.Status(code)
+	}
 }
 
 func loadRoute(e *gin.Engine) {
