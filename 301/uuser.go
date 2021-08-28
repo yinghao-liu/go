@@ -85,8 +85,7 @@ func loginHandle(c *gin.Context) {
 
 func loadRoute(e *gin.Engine) {
 	e.StaticFile("/", "web/index.html")
-	e.StaticFile("/updownload.html", "web/updownload.html")
-	e.Static("/script", "web/script")
+	e.Static("/web", "web")
 	e.POST("/login", loginHandle)
 }
 
