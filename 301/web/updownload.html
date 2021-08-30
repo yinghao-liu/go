@@ -59,19 +59,24 @@
 
             for (i of listJSON.fileList) {
                 let tr = document.createElement("tr");
+                console.log(i);
 
+                // 第一列 文件名
                 let tdFilename = document.createElement("td");
-                tdFilename.innerHTML = i.Name
+                tdFilename.innerHTML = i.name
                 tr.appendChild(tdFilename);
 
+                // 第二列 文件大小
                 let tdSize = document.createElement("td");
-                tdSize.innerHTML = i.Size
+                tdSize.innerHTML = i.size
                 tr.appendChild(tdSize);
 
+                // 第三列 文件修改时间
                 let tdTime = document.createElement("td");
-                tdTime.innerHTML = i.ModTime;
+                tdTime.innerHTML = i.modTime;
                 tr.appendChild(tdTime);
 
+                // 第四列 下载按钮
                 let tdDownload = document.createElement("td");
                 let buttonDownload = document.createElement("button");
                 buttonDownload.innerHTML = "下载";
@@ -79,11 +84,12 @@
                 attr.nodeValue = "downloadFile(this.name)";
                 buttonDownload.attributes.setNamedItem(attr);
                 attr = document.createAttribute("name");
-                attr.nodeValue = i.Name;
+                attr.nodeValue = i.name;
                 buttonDownload.attributes.setNamedItem(attr);
                 tdDownload.appendChild(buttonDownload)
                 tr.appendChild(tdDownload);
 
+                // 第五列 删除按钮
                 let tdDelete = document.createElement("td");
                 let buttonDelete = document.createElement("button");
                 buttonDelete.innerHTML = "删除";
@@ -91,7 +97,7 @@
                 attr.nodeValue = "deleteFile(this.name)";
                 buttonDelete.attributes.setNamedItem(attr);
                 attr = document.createAttribute("name");
-                attr.nodeValue = i.Name;
+                attr.nodeValue = i.name;
                 buttonDelete.attributes.setNamedItem(attr);
                 tdDelete.appendChild(buttonDelete)
                 tr.appendChild(tdDelete);
