@@ -8,11 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 错误码，需要统一定义
 const (
-	ErrorCodeOK        = 0
-	ErrorCodeUserCheck = 10000 + iota
-	ErrorCodeJsonData
-	ErrorCodeAuthInfo
+	ErrorCodeOK        = 0            // 成功
+	ErrorCodeUserCheck = 10000 + iota //用户名密码检查
+	ErrorCodeJsonData                 // json 数据错误
+	ErrorCodeAuthInfo                 // 认证信息错误
 )
 
 // 定义接收数据的结构体
@@ -22,13 +23,17 @@ type Login struct {
 	Password string `form:"password" json:"password" uri:"password" xml:"password" binding:"required"`
 }
 
+// 认证信息
 type AuthInfo struct {
-	Token string `form:"token" json:"token"`
+	Token string `form:"token" json:"token"` // token
 }
 
 // TODO 全局变量是否可用 以及命名规则 规范:可变全局变量尽量不用
 var users = map[string]string{"francis": "francis", "test": "test"}
 
+const jwtURL = "http://192.168.147.132:9080/apisix/plugin/jwt/sign?key=%v"
+
+// 检查用户名密码
 func checkUser(name string, password string) bool {
 	if user, ok := users[name]; ok {
 		if user == password {
@@ -60,7 +65,7 @@ func loginHandle(c *gin.Context) {
 			break
 		}
 		// 获取JWT-TOKEN
-		jwt := fmt.Sprintf("http://192.168.147.132:9080/apisix/plugin/jwt/sign?key=%v", json.Username)
+		jwt := fmt.Sprintf(jwtURL, json.Username)
 		if resp, err := http.Get(jwt); nil != err {
 			code = http.StatusNotFound
 			respSend["code"] = ErrorCodeAuthInfo
@@ -83,6 +88,7 @@ func loginHandle(c *gin.Context) {
 	c.JSON(code, respSend)
 }
 
+// 路由定义
 func loadRoute(e *gin.Engine) {
 	e.StaticFile("/", "web/index.html")
 	e.Static("/web", "web")
@@ -94,6 +100,7 @@ func routeInitBlock() {
 	loadRoute(engine)
 	engine.Run(":8000")
 }
+
 func main() {
 	routeInitBlock()
 	fmt.Println("------end-------")

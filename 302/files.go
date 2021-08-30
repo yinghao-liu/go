@@ -10,20 +10,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 错误码，需要统一定义
 const (
-	ErrorCodeOK        = 0
-	ErrorCodeUserCheck = 10000 + iota
-	ErrorCodeJsonData
-	ErrorCodeAuthInfo
-	ErrorCodeFiles
+	ErrorCodeOK        = 0            // 成功
+	ErrorCodeUserCheck = 10000 + iota //用户名密码检查
+	ErrorCodeJsonData                 // json 数据错误
+	ErrorCodeAuthInfo                 // 认证信息错误
+	ErrorCodeFiles                    //文件操作错误
 )
 
+// 文件信息
 type FileInfo struct {
-	Name    string
-	Size    int64
-	ModTime string
+	Name    string `json:"name"`    // 文件名
+	Size    int64  `json:"size"`    // 文件大小（字节）
+	ModTime string `json:"modTime"` // 修改时间
 }
 
+// 获取文件列表接口
 func filesHandle(c *gin.Context) {
 	var code int = http.StatusOK
 	respSend := make(map[string]interface{})
@@ -48,6 +51,7 @@ func filesHandle(c *gin.Context) {
 	c.JSON(code, respSend)
 }
 
+// 获取文件内容接口
 func fileGetHandle(c *gin.Context) {
 	name := c.Param("filename")
 	fullpath := "resource/" + name
@@ -57,6 +61,7 @@ func fileGetHandle(c *gin.Context) {
 	c.File(fullpath)
 }
 
+// 创建文件接口
 func filePostHandle(c *gin.Context) {
 	// form, _ := c.MultipartForm()
 	// files := form.File["upload[]"]
@@ -82,6 +87,7 @@ func filePostHandle(c *gin.Context) {
 	if contentLen, err = strconv.Atoi(contentLenStr); nil == err {
 		fmt.Printf("contentLen is %v\n", contentLen)
 	}
+	// 获取http传输过来的完整内容
 	var content = make([]byte, contentLen)
 	if content, err = c.GetRawData(); nil != err {
 		fmt.Println(err)
@@ -90,6 +96,9 @@ func filePostHandle(c *gin.Context) {
 		respSend["message"] = err.Error()
 		return
 	}
+
+	// 获取内容写到文件中
+	// TODO 添加文件是否存在的判断
 	if file, err := os.OpenFile(fullpath, os.O_RDWR|os.O_CREATE, 0755); err != nil {
 		log.Fatal(err)
 		code = http.StatusBadRequest
@@ -121,6 +130,7 @@ func filePostHandle(c *gin.Context) {
 	}
 }
 
+// 文件删除操作
 func fileDeleteHandle(c *gin.Context) {
 	var code int = http.StatusOK
 	respSend := make(map[string]interface{})
@@ -141,6 +151,7 @@ func fileDeleteHandle(c *gin.Context) {
 	}
 }
 
+// 路由定义
 func loadRoute(e *gin.Engine) {
 	v1 := e.Group("/v1")
 	{
