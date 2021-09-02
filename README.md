@@ -32,6 +32,8 @@ test go feature
 
 ### 203 [http client get and post](203)
 
+### 204 [http server through gin](204)
+
 ### 205 [http server through net/http](205)
 
 ### 206 [html test with gin](206)
