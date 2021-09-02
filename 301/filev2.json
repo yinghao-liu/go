@@ -11,12 +11,15 @@
         },
         {
             "name": "文件操作"
+        },
+        {
+            "name": "调试"
         }
     ],
     "paths": {
         "/v1/files/{filename}": {
-            "delete": {
-                "summary": "删除文件",
+            "get": {
+                "summary": "获取文件内容",
                 "description": "",
                 "tags": [
                     "文件操作"
@@ -44,7 +47,27 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "成功"
+                        "description": "成功",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "没有权限",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
                     }
                 }
             },
@@ -86,12 +109,33 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "成功"
+                        "description": "成功",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "没有权限",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
                     }
                 }
             },
-            "get": {
-                "summary": "获取文件内容",
+            "delete": {
+                "summary": "删除文件",
                 "description": "",
                 "tags": [
                     "文件操作"
@@ -121,10 +165,24 @@
                     "200": {
                         "description": "成功",
                         "content": {
-                            "application/octet-stream": {
+                            "*/*": {
                                 "schema": {
-                                    "type": "string"
-                                }
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "没有权限",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
                             }
                         }
                     }
@@ -201,6 +259,18 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "没有权限",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {}
+                            }
+                        }
                     }
                 }
             }
@@ -220,10 +290,12 @@
                                 "type": "object",
                                 "properties": {
                                     "username": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "用户名"
                                     },
                                     "password": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "description": "密码"
                                     }
                                 },
                                 "required": [
@@ -260,6 +332,35 @@
                                         "value": {
                                             "token": "a.b.c"
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/syncMap": {
+            "get": {
+                "summary": "调试map",
+                "description": "",
+                "tags": [
+                    "调试"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "examples": {
+                                    "1": {
+                                        "summary": "成功示例",
+                                        "value": ""
                                     }
                                 }
                             }
