@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>file upload</title>
 </head>
 
@@ -8,6 +9,10 @@
     <!-- <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data"> -->
     <form action="/upload" method="post" enctype="multipart/form-data">
         上传文件:<input type="file" name="files" multiple>
+        <input type="submit" value="提交">
+    </form>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        上传文件:<input type="file" name="files">
         <input type="submit" value="提交">
     </form>
     <a href=""></a>

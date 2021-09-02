@@ -31,5 +31,8 @@ func main() {
 		}
 		c.String(http.StatusOK, fmt.Sprintf("%d files uploaded!", len(files)))
 	})
-	router.Run(":8080")
+	router.GET("/user", func(c *gin.Context) {
+		c.String(http.StatusOK, fmt.Sprintf(`{code:0, message:"OK"}`))
+	})
+	router.Run(":8082")
 }
