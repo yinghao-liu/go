@@ -16,6 +16,12 @@ test go feature
 
 ### 100 [url](100)
 
+### 101 [sync](101)
+
+### 102 [json](102)
+
+### 103 [GORM](103)
+
 ## applications
 
 ### 200 [postman collection json parser](200)
@@ -23,6 +29,8 @@ test go feature
 ### 201 [Simple Factory](201)
 
 ### 202 [http server through gin multipart](202)
+
+### 203 [http client get and post](203)
 
 ### 205 [http server through net/http](205)
 
