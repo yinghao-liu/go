@@ -28,7 +28,7 @@ test go feature
 
 ### 201 [](201)
 
-### 202 [http server through gin multipart](202)
+### 202 [http server through gin form/multipart](202)
 
 ### 203 [http client get and post](203)
 
@@ -36,7 +36,7 @@ test go feature
 
 ### 205 [http server through net/http](205)
 
-### 206 [html test with gin](206)
+### 206 [](206)
 
 ### 301 [uuser](301)
 
