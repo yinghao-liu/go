@@ -57,6 +57,7 @@ func loginHandle(c *gin.Context) {
 			respSend["message"] = err.Error()
 			break
 		}
+
 		// 判断用户名密码是否正确
 		if !checkUser(json.Username, json.Password) {
 			code = http.StatusBadRequest
