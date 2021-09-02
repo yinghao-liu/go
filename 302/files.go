@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,9 @@ type FileInfo struct {
 	Size    int64  `json:"size"`    // 文件大小（字节）
 	ModTime string `json:"modTime"` // 修改时间
 }
+
+// 线程安全的map
+var fileRWLock sync.Map
 
 // 获取文件列表接口
 func filesHandle(c *gin.Context) {
@@ -50,21 +54,37 @@ func filesHandle(c *gin.Context) {
 	}
 	c.JSON(code, respSend)
 }
+func listSyncMap(c *gin.Context) {
+	fmt.Println("------listSyncMap---------")
+	fileRWLock.Range(func(key, value interface{}) bool {
+		fmt.Printf("%v, %v\n", key, value)
+		return true
+	})
+	c.Status(http.StatusOK)
+	fmt.Println("------listSyncMap end---------")
+}
 
 // 获取文件内容接口
 func fileGetHandle(c *gin.Context) {
 	name := c.Param("filename")
 	fullpath := "resource/" + name
 	fmt.Printf("name is %v\n", fullpath)
+
 	c.Header("Content-Type", "application/octet-stream")
 	//c.Header("Content-Disposition", "attachment; filename="+name)
+
+	value, _ := fileRWLock.LoadOrStore(fullpath, new(sync.RWMutex))
+	var rwLock *sync.RWMutex = value.(*sync.RWMutex)
+	rwLock.RLock() // 写锁
+	defer rwLock.RUnlock()
+
 	c.File(fullpath)
 }
 
 // 创建文件接口
 func filePostHandle(c *gin.Context) {
 	// form, _ := c.MultipartForm()
-	// files := form.File["upload[]"]
+	// files := form.File["upload"]
 
 	// for _, file := range files {
 	// 	log.Println(file.Filename)
@@ -96,6 +116,11 @@ func filePostHandle(c *gin.Context) {
 		respSend["message"] = err.Error()
 		return
 	}
+
+	value, _ := fileRWLock.LoadOrStore(fullpath, new(sync.RWMutex))
+	var rwLock *sync.RWMutex = value.(*sync.RWMutex)
+	rwLock.Lock() // 写锁
+	defer rwLock.Unlock()
 
 	// 获取内容写到文件中
 	// TODO 添加文件是否存在的判断
@@ -138,6 +163,12 @@ func fileDeleteHandle(c *gin.Context) {
 	fullpath := "resource/" + name
 	fmt.Printf("name is %v\n", fullpath)
 
+	value, _ := fileRWLock.LoadOrStore(fullpath, new(sync.RWMutex))
+	var rwLock *sync.RWMutex = value.(*sync.RWMutex)
+	rwLock.Lock() // 写锁
+	defer rwLock.Unlock()
+	defer fileRWLock.Delete(fullpath)
+
 	if err := os.Remove(fullpath); nil != err {
 		code = http.StatusBadRequest
 		respSend["code"] = ErrorCodeFiles
@@ -160,6 +191,7 @@ func loadRoute(e *gin.Engine) {
 		v1.POST("/files/:filename", filePostHandle)
 		v1.DELETE("/files/:filename", fileDeleteHandle)
 	}
+	e.GET("/syncMap", listSyncMap)
 }
 
 func routeInitBlock() {
