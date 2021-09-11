@@ -60,6 +60,99 @@ func typeAssertion() {
 
 }
 
+/*
+Type switches
+A type switch compares types rather than values. It is otherwise similar to an expression switch.
+It is marked by a special switch expression that has the form of a type assertion using the keyword type rather than an actual type:
+
+switch x.(type) {
+// cases
+}
+Cases then match actual types T against the dynamic type of the expression x. As with type assertions, x must be of interface type,
+and each non-interface type T listed in a case must implement the type of x. The types listed in the cases of a type switch must all be different.
+(T can be an interface type)
+
+Instead of a type, a case may use the predeclared identifier nil; that case is selected when the expression in the TypeSwitchGuard is a nil interface value. There may be at most one nil case.
+
+Given an expression x of type interface{}, the following type switch:
+
+switch i := x.(type) {
+case nil:
+	printString("x is nil")                // type of i is type of x (interface{})
+case int:
+	printInt(i)                            // type of i is int
+case float64:
+	printFloat64(i)                        // type of i is float64
+case func(int) float64:
+	printFunction(i)                       // type of i is func(int) float64
+case bool, string:
+	printString("type is bool or string")  // type of i is type of x (interface{})
+default:
+	printString("don't know the type")     // type of i is type of x (interface{})
+}
+could be rewritten:
+
+v := x  // x is evaluated exactly once
+if v == nil {
+	i := v                                 // type of i is type of x (interface{})
+	printString("x is nil")
+} else if i, isInt := v.(int); isInt {
+	printInt(i)                            // type of i is int
+} else if i, isFloat64 := v.(float64); isFloat64 {
+	printFloat64(i)                        // type of i is float64
+} else if i, isFunc := v.(func(int) float64); isFunc {
+	printFunction(i)                       // type of i is func(int) float64
+} else {
+	_, isBool := v.(bool)
+	_, isString := v.(string)
+	if isBool || isString {
+		i := v                         // type of i is type of x (interface{})
+		printString("type is bool or string")
+	} else {
+		i := v                         // type of i is type of x (interface{})
+		printString("don't know the type")
+	}
+}
+The type switch guard may be preceded by a simple statement, which executes before the guard is evaluated.
+
+The "fallthrough" statement is not permitted in a type switch.
+*/
+type B struct {
+	a string
+	b int
+}
+
+func (bb B) String() string {
+	return fmt.Sprintf("%s\n", "with String")
+}
+
+func typeSwitch(value interface{}) {
+	type Stringer interface {
+		String() string
+	}
+
+	type ERRStringer interface {
+		Error() string
+	}
+	//ss := value.(type) // use of .(type) outside type switch     // can only be used in `type switch`
+	//fmt.Printf("string %v", ss)
+	switch str := value.(type) {
+	case string:
+		fmt.Printf("string %v", str)
+	case Stringer:
+		fmt.Printf("Stringer %v", str.String())
+	case ERRStringer:
+		fmt.Printf("ERRStringer %v", str.Error())
+	default:
+		fmt.Printf("default %v, %T", str, str)
+	}
+}
+
 func main() {
-	typeAssertion()
+	//typeAssertion()
+	//var a error
+	var bString B
+	typeSwitch(bString)
+	var s int
+	typeSwitch(s)
 }
