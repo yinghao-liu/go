@@ -6,6 +6,8 @@ test go feature
 
 ### 001 [slice](001)
 
+### 002 [type assertions and type switches](002)
+
 ### 024 [interface and reflect](024)
 
 ### 028 [producer and customers with channel](028)
@@ -20,7 +22,11 @@ test go feature
 
 ### 102 [json](102)
 
-### 103 [GORM](103)
+### 103 [gorm](103)
+
+### 104 [context](104)
+
+### 150 [3rd ](150)
 
 ## applications
 
