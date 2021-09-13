@@ -136,11 +136,16 @@ func typeSwitch(value interface{}) {
 	}
 	//ss := value.(type) // use of .(type) outside type switch     // can only be used in `type switch`
 	//fmt.Printf("string %v", ss)
+
+	// type Stringer and B are all match, depend on their order appeared
 	switch str := value.(type) {
 	case string:
 		fmt.Printf("string %v", str)
+
 	case Stringer:
 		fmt.Printf("Stringer %v", str.String())
+	case B:
+		fmt.Printf("B %v", str)
 	case ERRStringer:
 		fmt.Printf("ERRStringer %v", str.Error())
 	default:
