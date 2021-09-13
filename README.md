@@ -8,8 +8,6 @@ test go feature
 
 ### 002 [type assertions and type switches](002)
 
-### 024 [interface and reflect](024)
-
 ### 028 [producer and customers with channel](028)
 
 ### 029 [defer-panic-recover](029)
@@ -25,6 +23,8 @@ test go feature
 ### 103 [gorm](103)
 
 ### 104 [context](104)
+
+### 105 [reflect](105)
 
 ### 150 [3rd ](150)
 
