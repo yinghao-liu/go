@@ -8,7 +8,7 @@ test go feature
 
 ### 002 [type assertions and type switches](002)
 
-### 028 [producer and customers with channel](028)
+### 028 [channel](028)
 
 ### 029 [defer-panic-recover](029)
 
