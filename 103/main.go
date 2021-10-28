@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -16,12 +18,14 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-
+	fmt.Printf("gorm.Open:%v\n", db)
 	// 迁移 schema
-	db.AutoMigrate(&Product{})
+	err = db.AutoMigrate(&Product{})
+	fmt.Printf("AutoMigrate err:%v\n", err)
 
 	// Create
-	db.Create(&Product{Code: "D42", Price: 100})
+	dbb := db.Create(&Product{Code: "D42", Price: 100})
+	fmt.Printf("Create:%v\n", dbb)
 
 	// Read
 	var product Product

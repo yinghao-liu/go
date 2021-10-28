@@ -1,4 +1,4 @@
-module testgrom
+module gormtest
 
 go 1.16
 
