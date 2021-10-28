@@ -6,9 +6,13 @@ test go feature
 
 ### 001 [slice](001)
 
+### 002 [maptest](002)
+
 ### 003 [interface](003)
 
 ### 004 [type assertions and type switches](004)
+
+### 005 [struct](005)
 
 ### 028 [channel](028)
 
