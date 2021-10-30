@@ -2,7 +2,35 @@ package main
 
 import "fmt"
 
+// cap and len
+func sliceByappend() {
+	var a []string
+	fmt.Printf("sliceByappend a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-1")
+	fmt.Printf("sliceByappend a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-2")
+	fmt.Printf("sliceByappend a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-3")
+	fmt.Printf("sliceByappend a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+
+}
+
+func sliceBymake() {
+	a := make([]string, 10)
+	fmt.Printf("sliceBymake a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-1")
+	fmt.Printf("sliceBymake a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-2")
+	fmt.Printf("sliceBymake a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+	a = append(a, "string-3")
+	fmt.Printf("sliceBymake a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
+
+}
+
 func main() {
+	sliceBymake()
+	sliceByappend()
+
 	letters := [5]string{"A", "B", "C", "D", "E"}
 	// The cap built-in function returns the capacity of v, according to its type:
 	// Array: the number of elements in v (same as len(v)).
