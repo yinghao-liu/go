@@ -12,6 +12,10 @@ BaseInfo 包含了 Base1 和 Base2，Base1 和 Base2 都实现了`show()`方法�
 
 如果 BaseInfo 和 Base1 都定义了`show()`方法，则会使用 BaseInfo 的方法
 
+## 导出
+
+内嵌结构体的导出问题，结构体可以不导出（结构体名小写，不能用该结构体整体），结构体内的字段可以导出（即结构体不导出不影响结构体内的字段导出）
+
 ## reference
 
 1. [方法](https://github.com/yinghao-liu/the-way-to-go_ZH_CN/blob/master/eBook/10.6.md)
