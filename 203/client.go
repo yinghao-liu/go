@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -59,9 +60,53 @@ func Post(url string, data interface{}, contentType string) string {
 	return string(result)
 }
 
+// 不panic版本
+// HTTP get
+func HttpGet(url string) ([]byte, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
+	fmt.Println(resp.StatusCode)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("ok")
+		return body, nil
+
+	} else {
+		return nil, errors.New(string(body))
+	}
+}
+
+func HttpPostJSON(url string, data interface{}) ([]byte, error) {
+
+	// 超时时间：5秒
+	client := &http.Client{Timeout: 5 * time.Second}
+	jsonStr, _ := json.Marshal(data)
+	resp, err := client.Post(url, "application/json", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+	result, _ := ioutil.ReadAll(resp.Body)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("ok")
+		return result, nil
+	} else {
+		return nil, errors.New(string(result))
+	}
+}
+
 func loop1000(host string, port int, loop int) {
 	start := time.Now()
-	req := fmt.Sprintf("http://%v:%v/decoder/publisher", host, port)
+	req := fmt.Sprintf("http://%v:%v/aa/bb", host, port)
 	fmt.Printf("port %v, loop %v, req %v\n", port, loop, req)
 	var res string
 	for i := 0; i < loop; i++ {
@@ -76,7 +121,7 @@ func loop1000(host string, port int, loop int) {
 func main() {
 	port := 80
 	loop := 1000
-	host := "172.16.199.2"
+	host := "127.0.0.1"
 	fmt.Printf("1-- host is %v, port is %v, loop is %v\n", host, port, loop)
 	if len(os.Args) > 1 {
 		host = os.Args[1]
