@@ -32,7 +32,7 @@ test go feature
 
 ### 105 [reflect](105)
 
-### 150 [3rd ](150)
+### 150 [ini ](150)
 
 ## applications
 
