@@ -6,98 +6,118 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
 )
 
-// 发送GET请求
-// url：         请求地址
-// response：    请求返回的内容
-func Get(url string) string {
-
-	// 超时时间：5秒
-	client := &http.Client{Timeout: 5 * time.Second}
-	resp, err := client.Get(url)
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
-	var buffer [512]byte
-	result := bytes.NewBuffer(nil)
-	for {
-		n, err := resp.Body.Read(buffer[0:])
-		result.Write(buffer[0:n])
-		if err != nil && err == io.EOF {
-			break
-		} else if err != nil {
-			panic(err)
-		}
-	}
-
-	return result.String()
-}
-
-// 发送POST请求
-// url：         请求地址
-// data：        POST请求提交的数据
-// contentType： 请求体格式，如：application/json
-// content：     请求放回的内容
-func Post(url string, data interface{}, contentType string) string {
-
-	// 超时时间：5秒
-	client := &http.Client{Timeout: 5 * time.Second}
-	jsonStr, _ := json.Marshal(data)
-	resp, err := client.Post(url, contentType, bytes.NewBuffer(jsonStr))
-	if err != nil {
-		panic(err)
-	}
-	defer resp.Body.Close()
-
-	result, _ := ioutil.ReadAll(resp.Body)
-	return string(result)
-}
-
-// 不panic版本
 // HTTP get
 func HttpGet(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
+	fmt.Printf("status: %d\n", resp.StatusCode)
 
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body))
-	fmt.Println(resp.StatusCode)
+	body, err := io.ReadAll(resp.Body)
+	fmt.Printf("response body:%s\n", string(body))
 
-	if resp.StatusCode == 200 {
-		fmt.Println("ok")
+	if resp.StatusCode == http.StatusOK {
 		return body, nil
-
 	} else {
 		return nil, errors.New(string(body))
 	}
 }
 
+// http post
 func HttpPostJSON(url string, data interface{}) ([]byte, error) {
 
 	// 超时时间：5秒
 	client := &http.Client{Timeout: 5 * time.Second}
-	jsonStr, _ := json.Marshal(data)
+	jsonStr, err := json.Marshal(data)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
 	resp, err := client.Post(url, "application/json", bytes.NewBuffer(jsonStr))
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
 	defer resp.Body.Close()
-	result, _ := ioutil.ReadAll(resp.Body)
+	result, _ := io.ReadAll(resp.Body)
 
 	if resp.StatusCode == 200 {
 		fmt.Println("ok")
+		return result, nil
+	} else {
+		return nil, errors.New(string(result))
+	}
+}
+
+// http delete
+func HttpDelete(url string) ([]byte, error) {
+	fmt.Printf("HttpDelete %s\n", url)
+
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+	fmt.Printf("status: %d\n", resp.StatusCode)
+
+	defer resp.Body.Close()
+	result, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+
+	if resp.StatusCode == http.StatusOK {
+		return result, nil
+	} else {
+		return nil, errors.New(string(result))
+	}
+}
+
+// http put
+func HttpPut(url string, data interface{}) ([]byte, error) {
+	fmt.Printf("HttpDelete %s\n", url)
+
+	jsonStr, err := json.Marshal(data)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+	fmt.Printf("status: %d\n", resp.StatusCode)
+
+	defer resp.Body.Close()
+	result, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return nil, err
+	}
+
+	if resp.StatusCode == http.StatusOK {
 		return result, nil
 	} else {
 		return nil, errors.New(string(result))
@@ -140,4 +160,53 @@ func main() {
 	}
 	fmt.Printf("2-- host is %v, port is %v, loop is %v\n", host, port, loop)
 	loop1000(host, port, loop)
+}
+
+/*******************************不是很好的写法示例******************************************/
+
+// 不是很好的 发送GET请求示例
+// url：         请求地址
+// response：    请求返回的内容
+func Get(url string) string {
+
+	// 超时时间：5秒
+	client := &http.Client{Timeout: 5 * time.Second}
+	resp, err := client.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	var buffer [512]byte
+	result := bytes.NewBuffer(nil)
+	for {
+		n, err := resp.Body.Read(buffer[0:])
+		result.Write(buffer[0:n])
+		if err != nil && err == io.EOF {
+			break
+		} else if err != nil {
+			panic(err)
+		}
+	}
+
+	return result.String()
+}
+
+// 不是很好的 发送POST请求示例
+// url：         请求地址
+// data：        POST请求提交的数据
+// contentType： 请求体格式，如：application/json
+// content：     请求放回的内容
+func Post(url string, data interface{}, contentType string) string {
+
+	// 超时时间：5秒
+	client := &http.Client{Timeout: 5 * time.Second}
+	jsonStr, _ := json.Marshal(data)
+	resp, err := client.Post(url, contentType, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		panic(err)
+	}
+
+	defer resp.Body.Close()
+	result, _ := io.ReadAll(resp.Body)
+	return string(result)
 }
