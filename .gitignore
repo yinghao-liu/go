@@ -2,3 +2,4 @@ main
 *.exe
 000tmp
 *.db
+*.json
