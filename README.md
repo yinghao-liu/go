@@ -52,11 +52,11 @@ test go feature
 
 ### 205 [http server through net/http](205)
 
-### 206 [](206)
+### 206 [HTTPProxy](206)
 
 ### 301 [uuser](301)
 
-### 302 [file up-downloda](302)
+### 302 [file up-download](302)
 
 ## openapi
 
