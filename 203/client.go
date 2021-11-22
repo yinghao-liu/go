@@ -89,7 +89,7 @@ func HttpDelete(url string) ([]byte, error) {
 }
 
 // http put
-func HttpPut(url string, data interface{}) ([]byte, error) {
+func HttpPutJSON(url string, data interface{}) ([]byte, error) {
 	fmt.Printf("HttpDelete %s\n", url)
 
 	jsonStr, err := json.Marshal(data)
@@ -103,6 +103,7 @@ func HttpPut(url string, data interface{}) ([]byte, error) {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
+	req.Header.Set("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
