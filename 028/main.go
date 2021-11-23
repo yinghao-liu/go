@@ -21,7 +21,7 @@ func customer1(flag int, ch chan int) {
 			break
 		}
 		fmt.Println(flag, "---customer1---", data)
-		time.Sleep(1e9)
+		time.Sleep(1 * time.Second)
 	}
 }
 
@@ -29,7 +29,7 @@ func customer1(flag int, ch chan int) {
 func customer2(flag int, ch chan int) {
 	for i := range ch {
 		fmt.Println(flag, "---customer2---", i)
-		time.Sleep(1e9)
+		time.Sleep(1 * time.Second)
 	}
 	fmt.Println(flag, "---customer2--- channel may be closed")
 }
@@ -41,7 +41,7 @@ func customer2(flag int, ch chan int) {
 func main() {
 	ch := make(chan int, 10)
 	go producer(ch)
-	time.Sleep(1e9)
+	time.Sleep(1 * time.Second)
 
 	// create two customers
 	go customer1(1, ch)
@@ -49,8 +49,8 @@ func main() {
 	go customer2(3, ch)
 	go customer2(4, ch)
 
-	time.Sleep(10e9)
+	time.Sleep(10 * time.Second)
 
-	time.Sleep(10e9)
+	time.Sleep(10 * time.Second)
 
 }
