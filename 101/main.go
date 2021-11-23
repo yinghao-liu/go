@@ -16,7 +16,7 @@ func readOP(tick int) {
 	defer rwMutex.RUnlock()
 
 	// work
-	time.Sleep(5e9)
+	time.Sleep(5 * time.Second)
 
 }
 
@@ -27,7 +27,7 @@ func writeOP(tick int) {
 	defer rwMutex.Unlock()
 
 	// work
-	time.Sleep(5e9)
+	time.Sleep(5 * time.Second)
 
 }
 
@@ -38,9 +38,9 @@ func main() {
 		} else {
 			go readOP(i)
 		}
-		time.Sleep(1e8)
+		time.Sleep(1 * time.Second)
 	}
 	for {
-		time.Sleep(5e9)
+		time.Sleep(5 * time.Second)
 	}
 }

@@ -10,8 +10,11 @@ func urlGenerate() {
 	a.Scheme = "http"
 	a.Host = "127.0.0.1:8000"
 	//a.Path = "/v1/account?a=b"
-	a.RawPath = url.PathEscape("/v1/account?a=b")
-	//a.RawQuery = "a=b"
+	//a.RawPath = url.PathEscape("/v1/account?a=b")
+
+	q := a.Query()
+	q.Add("aaa", "bbb")
+	a.RawQuery = q.Encode()
 	fmt.Printf("url is %s\n", a.String())
 
 }
