@@ -19,6 +19,23 @@ func urlGenerate() {
 
 }
 
+func rtspParser() {
+	u, err := url.Parse("rtsp://192.168.0.4:554/realtime?a=b")
+	if err != nil {
+		fmt.Printf("err:%s\n", err.Error())
+		return
+	}
+	fmt.Printf("u is %+v\n", *u)
+	fmt.Printf("u string is %s\n", u.String())
+	i := url.UserPassword("admin", "francis")
+	if nil != i {
+		fmt.Printf("i is %+v\n", *i)
+		fmt.Printf("i string is %s\n", i.String())
+	}
+	u.User = i
+	fmt.Printf("u after user string is %s\n", u.String())
+}
+
 func main() {
 	uoo := url.PathEscape("/v1/account?a=b")
 	fmt.Println(uoo)
@@ -27,4 +44,6 @@ func main() {
 	fmt.Println(url2, ok)
 
 	urlGenerate()
+
+	rtspParser()
 }
