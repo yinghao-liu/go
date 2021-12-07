@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>liuyinghao</title>
+</head>
+
+<body>
+    <form onsubmit="return false" id="login">
+        账号：<input type="text" id="username" placeholder="请输入你的账号"> <br>
+        密码：<input type="password" id="password" placeholder="请输入你的密码"> <br>
+        <input type="submit" value="登录" onclick="login()">
+    </form>
+
+    <script>
+        function loadUpdownloadHtml(tokenJSON) {
+            sessionStorage.setItem("Authorization", tokenJSON.token);
+            newHost = window.location.host
+            window.location.href = "http://" + newHost + "/web/updownload.html";
+        }
+
+        function statusCheck(response) {
+            if (200 !== response.status) {
+                newHost = window.location.host
+                window.location.href = "http://" + newHost;
+            } else {
+                return response.json()
+            }
+        }
+        function login() {
+            var username = document.forms["login"]["username"].value;
+            var password = document.forms["login"]["password"].value;
+            var msg = {};
+            msg.username = username;
+            msg.password = password;
+            var myJSON = JSON.stringify(msg);
+            console.log(myJSON);
+            fetch("/login", { method: 'POST', body: myJSON })
+                .then(statusCheck)
+                .then(loadUpdownloadHtml)
+                .catch(e => console.log("Oops, error", e))
+        }
+    </script>
+</body>
+
+</html>
