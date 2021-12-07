@@ -18,4 +18,16 @@ func main() {
 
 	fmt.Println(net.IPv4Mask(255, 255, 255, 0))
 
+	mask := net.ParseIP("255.255.255.0")
+	fmt.Printf("mask is %v\n", mask)
+	i, j := mask.MarshalText()
+	fmt.Printf("i is %v, j is %v\n", i, j)
+
+	var a, b, c, d byte
+	fmt.Sscanf("255.255.255.0", "%d.%d.%d.%d", &a, &b, &c, &d)
+	fmt.Printf("a is %v, b is %v\n", a, b)
+	mm := net.IPv4Mask(a, b, c, d)
+	m, n := mm.Size()
+	fmt.Printf("mm is %v,%v\n", m, n)
+
 }

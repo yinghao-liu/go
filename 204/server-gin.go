@@ -29,6 +29,7 @@ type Reprinted struct {
 // 视频添加
 func ProductAdd(c *gin.Context) {
 	var t VideoType
+	// 多次绑定问题 -ShouldBindBodyWith
 	if err := c.ShouldBindBodyWith(&t, binding.JSON); err != nil {
 		fmt.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"code": 1001, "message": err.Error()})
