@@ -5,6 +5,12 @@ import (
 	"net"
 )
 
+func IPtest() {
+	var ip net.IP
+	b := ip.IsLoopback()
+	fmt.Printf("b is %v\n", b)
+}
+
 func main() {
 	//ipv4Addr := net.ParseIP("192.0.2.1")
 	// This mask corresponds to a /24 subnet for IPv4.
@@ -29,5 +35,7 @@ func main() {
 	mm := net.IPv4Mask(a, b, c, d)
 	m, n := mm.Size()
 	fmt.Printf("mm is %v,%v\n", m, n)
+	fmt.Printf("---------IPtest------------\n")
+	IPtest()
 
 }
