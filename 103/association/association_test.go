@@ -1,12 +1,13 @@
-package main
+package ass
 
 import (
 	"fmt"
+	inf "gormtest/infrastructure"
 	"testing"
 )
 
 func TestAssociation(t *testing.T) {
-	gormInit()
+	inf.GormInit()
 
 	fmt.Printf("----------------TestAssociation\n")
 	Association()

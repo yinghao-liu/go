@@ -1,7 +1,8 @@
-package main
+package crud
 
 import (
 	"fmt"
+	inf "gormtest/infrastructure"
 
 	"gorm.io/gorm"
 )
@@ -30,23 +31,23 @@ type Product struct {
 
 func BasicOperation() {
 	// 迁移 schema
-	err := gormDB.AutoMigrate(&Product{})
+	err := inf.GormDB.AutoMigrate(&Product{})
 	fmt.Printf("AutoMigrate err:%v\n", err)
 
 	// Create
-	dbb := gormDB.Create(&Product{Code: "D42", Price: 100})
+	dbb := inf.GormDB.Create(&Product{Code: "D42", Price: 100})
 	fmt.Printf("Create:%v\n", dbb)
 
 	// Read
 	var product Product
-	gormDB.First(&product, 1)                 // 根据整形主键查找
-	gormDB.First(&product, "code = ?", "D42") // 查找 code 字段值为 D42 的记录
+	inf.GormDB.First(&product, 1)                 // 根据整形主键查找
+	inf.GormDB.First(&product, "code = ?", "D42") // 查找 code 字段值为 D42 的记录
 
 	// Update - 将 product 的 price 更新为 200
-	gormDB.Model(&product).Update("Price", 200)
+	inf.GormDB.Model(&product).Update("Price", 200)
 	// Update - 更新多个字段
-	gormDB.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // 仅更新非零值字段
-	gormDB.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
+	inf.GormDB.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // 仅更新非零值字段
+	inf.GormDB.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
 
 	// Delete - 删除 product
 	//db.Delete(&product, 1)
@@ -54,7 +55,7 @@ func BasicOperation() {
 
 // 列名约定
 func ConventionsColumnName() {
-	err := gormDB.AutoMigrate(&User{})
+	err := inf.GormDB.AutoMigrate(&User{})
 	if nil != err {
 		fmt.Printf("AutoMigrate err:%v\n", err)
 
@@ -64,6 +65,6 @@ func ConventionsColumnName() {
 // 列名约定-读取
 func ConventionsColumnNameRetrieve() {
 	var u User
-	gormDB.Debug().Table("users").First(&u)
+	inf.GormDB.Debug().Table("users").First(&u)
 	fmt.Printf("%+v\n", u)
 }

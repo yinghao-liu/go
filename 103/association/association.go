@@ -1,7 +1,8 @@
-package main
+package ass
 
 import (
 	"fmt"
+	inf "gormtest/infrastructure"
 
 	"gorm.io/gorm"
 )
@@ -21,11 +22,11 @@ type Language struct {
 func Association() error {
 
 	// 迁移 schema
-	if err := gormDB.AutoMigrate(&Language{}); nil != err {
+	if err := inf.GormDB.AutoMigrate(&Language{}); nil != err {
 		fmt.Printf("AutoMigrate err:%v\n", err)
 		return err
 	}
-	if err := gormDB.AutoMigrate(&Student{}); nil != err {
+	if err := inf.GormDB.AutoMigrate(&Student{}); nil != err {
 		fmt.Printf("AutoMigrate err:%v\n", err)
 		return err
 	}
@@ -38,12 +39,12 @@ func Association() error {
 		},
 	}
 
-	gormDB.Debug().Create(&usr)
+	inf.GormDB.Debug().Create(&usr)
 
-	gormDB.Debug().Save(&usr)
+	inf.GormDB.Debug().Save(&usr)
 	var lans []Language
 	var stud Student
-	gormDB.Model(&stud).Association("Languages").Find(&lans)
+	inf.GormDB.Model(&stud).Association("Languages").Find(&lans)
 	for i, j := range lans {
 		fmt.Printf("i:%d,j:%+v\n", i, j)
 	}

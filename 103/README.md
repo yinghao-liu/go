@@ -29,6 +29,12 @@ type User struct {
 
 
 
+## 关联
+
+### Belongs To（一对一）
+
+
+
 ## reference
 
 1.[GORM 约定](https://gorm.io/zh_CN/docs/conventions.html)
