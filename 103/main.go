@@ -20,6 +20,12 @@ func gormInit() {
 	}
 }
 
+// func FuncInfo() {
+// 	pc, file, line, ok := runtime.Caller(0)
+// 	f := runtime.FuncForPC(pc)
+
+// }
+
 func main() {
 	gormInit()
 	Association()
