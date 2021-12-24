@@ -26,6 +26,11 @@ func sliceBymake() {
 	fmt.Printf("sliceBymake a is %v:%p, len:%d, cap:%d\n", a, a, len(a), cap(a))
 
 }
+func array2slice() {
+	//ss := [...]string{"1", "2"}[:] //invalid operation [2]string{...}[:] (slice of unaddressable value)
+	s := []int{1, 2, 3}
+	fmt.Printf("%v\n", s)
+}
 
 func main() {
 	sliceBymake()
