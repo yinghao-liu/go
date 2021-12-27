@@ -55,5 +55,7 @@ type User struct {
 
 ## reference
 
-1.[GORM 约定](https://gorm.io/zh_CN/docs/conventions.html)
+1. [GORM 约定](https://gorm.io/zh_CN/docs/conventions.html)
+
+2. [关联-has_many](https://gorm.io/zh_CN/docs/has_many.html)
 

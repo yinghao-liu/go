@@ -12,3 +12,10 @@ func TestAssociation(t *testing.T) {
 	fmt.Printf("----------------TestAssociation\n")
 	Association()
 }
+
+func TestAssociationHasMany(t *testing.T) {
+	inf.GormInit()
+
+	fmt.Printf("----------------TestAssociationHasMany\n")
+	HasManyCreate()
+}
