@@ -13,11 +13,11 @@ func TestAssociation(t *testing.T) {
 	Association()
 }
 
-func TestAssociationHasMany(t *testing.T) {
+func TestAssociationHasManyCreate(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasMany\n")
+	fmt.Printf("----------------TestAssociationHasManyCreate\n")
 	HasManyCreate()
 }
 
@@ -27,4 +27,12 @@ func TestAssociationHasManyFind(t *testing.T) {
 
 	fmt.Printf("----------------TestAssociationHasManyFind\n")
 	HasManyFind()
+}
+
+func TestAssociationHasManyUpdate(t *testing.T) {
+	inf.GormInit()
+	HasManyInit()
+
+	fmt.Printf("----------------TestAssociationHasManyUpdate\n")
+	HasManyUpdate()
 }

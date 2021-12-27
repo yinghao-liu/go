@@ -65,3 +65,26 @@ func HasManyFind() {
 
 	}
 }
+
+// 更新
+func HasManyUpdate() {
+	var user HasManyUser
+	user.ID = 1
+
+	var creditCard HasManyCreditCard
+	creditCard.Number = "33"
+	// 追加
+	err := inf.GormDB.Debug().Model(&user).Association("CreditCards").Append(&creditCard)
+	if nil != err {
+		fmt.Printf("err is %s\n", err.Error())
+		return
+	}
+
+	// 替换
+	err = inf.GormDB.Debug().Model(&user).Association("CreditCards").Replace(&creditCard)
+	if nil != err {
+		fmt.Printf("err is %s\n", err.Error())
+		return
+	}
+
+}
