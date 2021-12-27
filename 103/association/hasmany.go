@@ -5,6 +5,7 @@ import (
 	inf "gormtest/infrastructure"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 // User 有多张 CreditCard，默认HasManyUserID 是外键
@@ -108,4 +109,27 @@ func HasManyDelete() {
 		fmt.Printf("err is %s\n", err.Error())
 		return
 	}
+}
+
+// 关联删除
+func HasManyDeleteAss() {
+	var user HasManyUser
+	user.ID = 1
+
+	var creditCard HasManyCreditCard
+	creditCard.ID = 4
+	//  删除 user 时，也删除 user 的 CreditCards
+	tx := inf.GormDB.Debug().Select("CreditCards").Delete(&user)
+	if nil != tx.Error {
+		fmt.Printf("err is %s\n", tx.Error.Error())
+		return
+	}
+
+	// 删除 user 时，也删除用户所有关联记录
+	tx = inf.GormDB.Debug().Select(clause.Associations).Delete(&user)
+	if nil != tx.Error {
+		fmt.Printf("err is %s\n", tx.Error.Error())
+		return
+	}
+
 }

@@ -44,3 +44,11 @@ func TestAssociationHasManyDelete(t *testing.T) {
 	fmt.Printf("----------------TestAssociationHasManyDelete\n")
 	HasManyDelete()
 }
+
+func TestAssociationHasManyDeleteAss(t *testing.T) {
+	inf.GormInit()
+	HasManyInit()
+
+	fmt.Printf("----------------TestAssociationHasManyDeleteAss\n")
+	HasManyDeleteAss()
+}
