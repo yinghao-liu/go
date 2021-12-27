@@ -35,6 +35,24 @@ type User struct {
 
 
 
+### Has One (一对一)
+
+
+
+### Has Many （一对多）
+
+
+
+
+
+### Many To Many （多对多）
+
+
+
+
+
+
+
 ## reference
 
 1.[GORM 约定](https://gorm.io/zh_CN/docs/conventions.html)
