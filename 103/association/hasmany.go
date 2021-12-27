@@ -9,6 +9,8 @@ import (
 )
 
 // User 有多张 CreditCard，默认HasManyUserID 是外键
+// 外键默认使用拥有者的类型名加上其主键字段名,本例拥有者的类型名是HasManyUser，其主键字段名是ID，所以默认外键是HasManyUserID
+// 引用默认使用拥有者的主键,本例是HasManyUser的ID字段
 type HasManyUser struct {
 	gorm.Model
 	CreditCards []HasManyCreditCard
@@ -19,6 +21,20 @@ type HasManyCreditCard struct {
 	Number        string
 	HasManyUserID uint
 }
+
+// 重写主键-引用
+// 可使用foreignKey指定外键，使用references指定引用
+// type User struct {
+// 	gorm.Model
+// 	MemberNumber string
+// 	CreditCards  []CreditCard `gorm:"foreignKey:UserNumber;references:MemberNumber"`
+// }
+
+// type CreditCard struct {
+// 	gorm.Model
+// 	Number     string
+// 	UserNumber string
+// }
 
 // 初始化
 func HasManyInit() {
