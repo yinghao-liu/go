@@ -88,3 +88,24 @@ func HasManyUpdate() {
 	}
 
 }
+
+// 删除
+func HasManyDelete() {
+	var user HasManyUser
+	user.ID = 1
+
+	var creditCard HasManyCreditCard
+	creditCard.ID = 4
+	// 删除
+	err := inf.GormDB.Debug().Model(&user).Association("CreditCards").Delete(&creditCard)
+	if nil != err {
+		fmt.Printf("err is %s\n", err.Error())
+		return
+	}
+	// 清空
+	err = inf.GormDB.Debug().Model(&user).Association("CreditCards").Clear()
+	if nil != err {
+		fmt.Printf("err is %s\n", err.Error())
+		return
+	}
+}
