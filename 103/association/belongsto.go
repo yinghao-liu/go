@@ -7,6 +7,7 @@ import (
 )
 
 // `User` 属于 `Company`，`BelongsToCompanyID` 是外键
+// 主体是user，以user视角看
 // 字段BelongsToCompany名称必须是这个
 // 默认情况下，外键的名字，使用拥有者的类型名称加上表的主键的字段名字,本例中拥有者是BelongsToCompany，它的主键是ID
 // 默认情况下，引用的是拥有者的主键，本例的是BelongsToCompany的ID字段。可以使用references 来修改它

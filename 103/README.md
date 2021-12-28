@@ -31,6 +31,10 @@ type User struct {
 
 ## 关联
 
+其中Belongs To和Has One都是一对一的关系，都是以user为主体，不同之处在于它们和关联对象的关系，`Belongs To`的user和关联对象（compony）的关系是`属于`，`Has One`的user和关联对象（compony）的关系是`属于`,都是站在user的角度看的。
+
+`Belongs To`和SQL里的一对一是一个概念
+
 ### Belongs To（一对一）
 
 

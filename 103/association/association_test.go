@@ -22,6 +22,15 @@ func TestBelongsToCreate(t *testing.T) {
 	BelongsToCreate()
 }
 
+/******************************test has one***************************************/
+func TestHasOneCreate(t *testing.T) {
+	inf.GormInit()
+	HasOneInit()
+
+	fmt.Printf("----------------TestHasOneCreate\n")
+	HasOneCreate()
+}
+
 /******************************test Has many***************************************/
 func TestAssociationHasManyCreate(t *testing.T) {
 	inf.GormInit()
