@@ -54,6 +54,9 @@ func GormodelFind() {
 	b := **a
 	fmt.Printf("b is %+v\n", b.([]byte))
 
+	c := **model.Config.(**interface{})
+	fmt.Printf("c is %+v\n", c.([]byte))
+
 	var stu Student
 	e := json.Unmarshal(b.([]byte), &stu)
 	if nil != e {
