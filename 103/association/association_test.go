@@ -6,13 +6,6 @@ import (
 	"testing"
 )
 
-func TestAssociation(t *testing.T) {
-	inf.GormInit()
-
-	fmt.Printf("----------------TestAssociation\n")
-	Association()
-}
-
 /******************************test belongs to***************************************/
 func TestBelongsToCreate(t *testing.T) {
 	inf.GormInit()
@@ -32,42 +25,58 @@ func TestHasOneCreate(t *testing.T) {
 }
 
 /******************************test Has many***************************************/
-func TestAssociationHasManyCreate(t *testing.T) {
+func TestHasManyCreate(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasManyCreate\n")
+	fmt.Printf("----------------TestHasManyCreate\n")
 	HasManyCreate()
 }
 
-func TestAssociationHasManyFind(t *testing.T) {
+func TestHasManyFind(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasManyFind\n")
+	fmt.Printf("----------------TestHasManyFind\n")
 	HasManyFind()
 }
 
-func TestAssociationHasManyUpdate(t *testing.T) {
+func TestHasManyUpdate(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasManyUpdate\n")
+	fmt.Printf("----------------TestHasManyUpdate\n")
 	HasManyUpdate()
 }
 
-func TestAssociationHasManyDelete(t *testing.T) {
+func TestHasManyDelete(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasManyDelete\n")
+	fmt.Printf("----------------TestHasManyDelete\n")
 	HasManyDelete()
 }
 
-func TestAssociationHasManyDeleteAss(t *testing.T) {
+func TestHasManyDeleteAss(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
 
-	fmt.Printf("----------------TestAssociationHasManyDeleteAss\n")
+	fmt.Printf("----------------TestHasManyDeleteAss\n")
 	HasManyDeleteAss()
+}
+
+/******************************test Many to Many***************************************/
+func TestManyToManyCreate(t *testing.T) {
+	inf.GormInit()
+	ManyToManyInit()
+
+	fmt.Printf("----------------TestBelongsToCreate\n")
+	ManyToManyCreate()
+}
+func TestManyToManyFind(t *testing.T) {
+	inf.GormInit()
+	ManyToManyInit()
+
+	fmt.Printf("----------------TestManyToManyFind\n")
+	ManyToManyFind()
 }
