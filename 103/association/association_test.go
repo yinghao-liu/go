@@ -13,6 +13,16 @@ func TestAssociation(t *testing.T) {
 	Association()
 }
 
+/******************************test belongs to***************************************/
+func TestBelongsToCreate(t *testing.T) {
+	inf.GormInit()
+	BelongsToInit()
+
+	fmt.Printf("----------------TestBelongsToCreate\n")
+	BelongsToCreate()
+}
+
+/******************************test Has many***************************************/
 func TestAssociationHasManyCreate(t *testing.T) {
 	inf.GormInit()
 	HasManyInit()
