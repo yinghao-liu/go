@@ -7,22 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// 用户模型
-type User struct {
-	ID     uint   // gorm default id
-	Name   string // gorm default name
-	Age    int    // gorm default age
-	Gender string // gorm default gender
-
-	UserDAO string // gorm default user_dao
-	DAOUser string // gorm default dao_user
-
-	UserAAA string //gorm default user_aaa
-	AAAUser string //gorm default aaa_user
-
-	UserAAIPA string `gorm:"column:user_aaipa"` //gorm default user_aa_ip_a, change to user_aaipa through column
-	AAIPAUser string //gorm default aa_ip_a_user
-}
 type Product struct {
 	gorm.Model
 	Code  string
@@ -51,20 +35,4 @@ func BasicOperation() {
 
 	// Delete - 删除 product
 	//db.Delete(&product, 1)
-}
-
-// 列名约定
-func ConventionsColumnName() {
-	err := inf.GormDB.AutoMigrate(&User{})
-	if nil != err {
-		fmt.Printf("AutoMigrate err:%v\n", err)
-
-	}
-}
-
-// 列名约定-读取
-func ConventionsColumnNameRetrieve() {
-	var u User
-	inf.GormDB.Debug().Table("users").First(&u)
-	fmt.Printf("%+v\n", u)
 }

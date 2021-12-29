@@ -27,39 +27,24 @@ type User struct {
 
 对于字段的蛇形转换，如果模型字段中有大写的专有名词，如`IP`,会被单独转换，如果不符合期望可以使用`column`指定列名
 
-
-
 ## 关联
 
-其中Belongs To和Has One都是一对一的关系，都是以user为主体，不同之处在于它们和关联对象的关系，`Belongs To`的user和关联对象（compony）的关系是`属于`，`Has One`的user和关联对象（compony）的关系是`属于`,都是站在user的角度看的。
+其中 Belongs To 和 Has One 都是一对一的关系，都是以 user 为主体，不同之处在于它们和关联对象的关系，`Belongs To`的 user 和关联对象（compony）的关系是`属于`，`Has One`的 user 和关联对象（compony）的关系是`属于`,都是站在 user 的角度看的。
 
-`Belongs To`和SQL里的一对一是一个概念
+`Belongs To`和 SQL 里的一对一是一个概念
 
 ### Belongs To（一对一）
 
-
-
 ### Has One (一对一)
-
-
 
 ### Has Many （一对多）
 
-
-
-
-
 ### Many To Many （多对多）
 
-
-
-
-
-
+## 兼容性
 
 ## reference
 
 1. [GORM 约定](https://gorm.io/zh_CN/docs/conventions.html)
 
 2. [关联-has_many](https://gorm.io/zh_CN/docs/has_many.html)
-

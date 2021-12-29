@@ -12,15 +12,3 @@ func TestBasicOperation(t *testing.T) {
 	fmt.Printf("----------------TestBasicOperation\n")
 	BasicOperation()
 }
-func TestConventionsColumnName(t *testing.T) {
-	inf.GormInit()
-
-	fmt.Printf("----------------TestConventionsColumnName\n")
-	ConventionsColumnName()
-}
-func TestConventionsColumnNameRetrieve(t *testing.T) {
-	inf.GormInit()
-
-	fmt.Printf("----------------TestConventionsColumnNameRetrieve\n")
-	ConventionsColumnNameRetrieve()
-}
