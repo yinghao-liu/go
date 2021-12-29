@@ -1,7 +1,9 @@
 package gormodel
 
 import (
+	"database/sql/driver"
 	"encoding/json"
+	"errors"
 	"fmt"
 	inf "gormtest/infrastructure"
 )
@@ -23,9 +25,11 @@ type User struct {
 	AAIPAUser string //gorm default aa_ip_a_user
 }
 
+/*************************************model with interface{}*****************************************/
+// model with interface{} - type:bytes
 type Gormodel struct {
 	ID     int
-	Config interface{} `gorm:"type:bytes"` // 将结构体转换为bytes
+	Config interface{} `gorm:"type:bytes"` // 将结构体转换为json bytes再存储
 }
 
 type Student struct {
@@ -34,6 +38,7 @@ type Student struct {
 	Gender string
 }
 
+/*************************************Conventions*****************************************/
 // 列名约定
 func ConventionsColumnName() {
 	err := inf.GormDB.AutoMigrate(&User{})
@@ -50,6 +55,7 @@ func ConventionsColumnNameRetrieve() {
 	fmt.Printf("%+v\n", u)
 }
 
+/***************************************Gormodel with type-byte************************************************/
 // 初始化
 func GormodelInit() {
 	inf.GormDB.AutoMigrate(&Gormodel{})
@@ -97,4 +103,51 @@ func GormodelFind() {
 		return
 	}
 	fmt.Printf("stu is %+v\n", stu)
+}
+
+/***************************************Gormodel v2************************************************/
+func (s *Student) Scan(value interface{}) error {
+	bytes, ok := value.([]byte)
+	if !ok {
+		return errors.New(fmt.Sprint("Failed to unmarshal JSONB value:", value))
+	}
+
+	var result Student
+	if err := json.Unmarshal(bytes, &result); nil != err {
+		return errors.New(err.Error())
+	}
+
+	*s = result
+	return nil
+}
+
+func (s Student) Value() (driver.Value, error) {
+	return json.Marshal(s)
+}
+
+// 创建
+func GormodelCreateV2() {
+	var stu Student
+	stu.Name = "francis"
+	stu.Age = 18
+	stu.Gender = "male"
+
+	model := Gormodel{Config: stu}
+
+	inf.GormDB.Debug().Create(&model)
+}
+
+// find
+func GormodelFindV2() {
+	var model Gormodel
+	inf.GormDB.Debug().Find(&model)
+	//fmt.Printf("%+v\n", model.Config.(type))
+
+	// 未找到字段为interface，gorm转换的参考文档
+	// type is **interface {}
+	switch t := model.Config.(type) {
+	default:
+		fmt.Printf("type is %T\n", t)
+	}
+
 }

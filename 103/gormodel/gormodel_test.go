@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+/***************************************Gormodel with type-byte************************************************/
 func TestGormodelCreate(t *testing.T) {
 	inf.GormInit()
 	GormodelInit()
@@ -17,6 +18,18 @@ func TestGormodelFind(t *testing.T) {
 	GormodelFind()
 }
 
+func TestGormodelCreateV2(t *testing.T) {
+	inf.GormInit()
+	GormodelInit()
+	GormodelCreateV2()
+}
+func TestGormodelFindV2(t *testing.T) {
+	inf.GormInit()
+	GormodelInit()
+	GormodelFindV2()
+}
+
+/***************************************Conventions************************************************/
 func TestConventionsColumnName(t *testing.T) {
 	inf.GormInit()
 
