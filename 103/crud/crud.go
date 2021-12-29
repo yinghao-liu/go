@@ -67,5 +67,21 @@ func CRUDCreate() {
 	if nil != tx.Error {
 		fmt.Printf("Create3 error:%s\n", tx.Error.Error())
 	}
+}
 
+func CRUDFind() {
+	var count int64
+	var aa struct {
+		ID   int
+		Code string
+	}
+	aa.ID = 1
+	aa.Code = ""
+	// var pc Product
+	// pc.ID = 1
+	// pc.Code = ""
+	// 当使用结构作为条件查询时，GORM 只会查询非零值字段 - 用于某个字段可能给，可能不给的情况
+	inf.GormDB.Table("products").Debug().Where(&aa).Count(&count)
+	//inf.GormDB.Table("products").Debug().Where("id", 1).Where("code", "").Count(&count)
+	fmt.Printf("count is %d\n", count)
 }

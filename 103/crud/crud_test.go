@@ -19,3 +19,10 @@ func TestCRUDCreate(t *testing.T) {
 	fmt.Printf("----------------TestCRUDCreate\n")
 	CRUDCreate()
 }
+func TestCRUDFind(t *testing.T) {
+	inf.GormInit()
+	CRUDInit()
+
+	fmt.Printf("----------------TestCRUDFind\n")
+	CRUDFind()
+}
