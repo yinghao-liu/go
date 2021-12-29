@@ -4,20 +4,24 @@ import (
 	"fmt"
 	inf "gormtest/infrastructure"
 
-	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Product struct {
-	gorm.Model
+	ID    uint `gorm:"primarykey"`
 	Code  string
 	Price uint
 }
 
-func BasicOperation() {
+func CRUDInit() {
 	// 迁移 schema
 	err := inf.GormDB.AutoMigrate(&Product{})
-	fmt.Printf("AutoMigrate err:%v\n", err)
+	if nil != err {
+		fmt.Printf("AutoMigrate err:%v\n", err)
+	}
+}
 
+func CRUDBasicOperation() {
 	// Create
 	dbb := inf.GormDB.Create(&Product{Code: "D42", Price: 100})
 	fmt.Printf("Create:%v\n", dbb)
@@ -35,4 +39,33 @@ func BasicOperation() {
 
 	// Delete - 删除 product
 	//db.Delete(&product, 1)
+}
+
+func CRUDCreate() {
+	/****************************************************************/
+	var ins Product
+	ins.ID = 1
+	ins.Code = "1"
+	ins.Price = 10
+	tx := inf.GormDB.Debug().Create(&ins)
+	if nil != tx.Error {
+		fmt.Printf("Create1 error:%s\n", tx.Error.Error())
+	}
+	tx = inf.GormDB.Debug().Not("EXITS").Create(&ins)
+	if nil != tx.Error {
+		fmt.Printf("Create2 error:%s\n", tx.Error.Error())
+	}
+	inss := make([]Product, 2)
+	inss[0] = ins
+	inss[1].ID = 2
+	inss[1].Code = "2"
+	inss[1].Price = 20
+	fmt.Printf("inss is %+v\n", inss)
+
+	// 在冲突时，什么都不做
+	tx = inf.GormDB.Debug().Clauses(clause.OnConflict{DoNothing: true}).Create(inss)
+	if nil != tx.Error {
+		fmt.Printf("Create3 error:%s\n", tx.Error.Error())
+	}
+
 }

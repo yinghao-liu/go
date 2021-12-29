@@ -10,5 +10,12 @@ func TestBasicOperation(t *testing.T) {
 	inf.GormInit()
 
 	fmt.Printf("----------------TestBasicOperation\n")
-	BasicOperation()
+	CRUDBasicOperation()
+}
+func TestCRUDCreate(t *testing.T) {
+	inf.GormInit()
+	CRUDInit()
+
+	fmt.Printf("----------------TestCRUDCreate\n")
+	CRUDCreate()
 }
