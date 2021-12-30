@@ -42,3 +42,11 @@ func TestConventionsColumnNameRetrieve(t *testing.T) {
 	fmt.Printf("----------------TestConventionsColumnNameRetrieve\n")
 	ConventionsColumnNameRetrieve()
 }
+
+/**************************Compatible*********************************/
+func TestGormodelCompatibleCreate(t *testing.T) {
+	inf.GormInit()
+
+	fmt.Printf("----------------TestGormodelCompatibleCreate\n")
+	GormodelCompatibleCreate()
+}

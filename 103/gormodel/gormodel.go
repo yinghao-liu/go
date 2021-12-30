@@ -38,6 +38,14 @@ type Student struct {
 	Gender string
 }
 
+// 兼容性测试
+type CompatibleStudent struct {
+	Name string
+	Age  int
+	//Gender string
+	Gender int // 兼容性测试
+}
+
 /*************************************Conventions*****************************************/
 // 列名约定
 func ConventionsColumnName() {
@@ -150,4 +158,21 @@ func GormodelFindV2() {
 		fmt.Printf("type is %T\n", t)
 	}
 
+}
+
+/*************************************Compatible***************************************/
+
+// 创建
+func GormodelCompatibleCreate() {
+	inf.GormDB.Debug().AutoMigrate(&CompatibleStudent{})
+
+	var stu CompatibleStudent
+	stu.Name = "francis"
+	stu.Age = 18
+	stu.Gender = 2
+
+	inf.GormDB.Debug().Create(stu)
+	var stus []CompatibleStudent
+	inf.GormDB.Debug().Find(&stus)
+	fmt.Printf("stus:%+v\n", stus)
 }

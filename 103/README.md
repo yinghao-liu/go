@@ -45,6 +45,8 @@ type User struct {
 
 ## 兼容性
 
+例如：一个字段原来是string类型，之后修改为int类型的处理
+
 
 
 ## 使用
