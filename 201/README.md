@@ -9,7 +9,11 @@ link -X flag
 > or initialized to a constant string expression. -X will not work if the initializer makes
 > a function call or refers to other variables.
 
+version
 `go build -ldflags="-X main.Version=v1.0.0 -X main.version=v2.0.0"`
+
+with date
+`go build -ldflags="-X main.Version=v1.0.0 -X 'main.date=$(date)'"`
 
 ## reference
 
