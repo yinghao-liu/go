@@ -18,6 +18,16 @@ test go feature
 
 ### 029 [defer-panic-recover](029)
 
+## diagnostics
+
+### 090 [Profiling](090)
+
+### 091 [Tracing](091)
+
+### 092 [Debugging](092)
+
+### 093 [Runtime statistics and events](093)
+
 ## packages
 
 ### 100 [url](100)
