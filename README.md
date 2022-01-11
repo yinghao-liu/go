@@ -14,6 +14,8 @@ test go feature
 
 ### 005 [struct](005)
 
+### 006 [cgo](006)
+
 ### 028 [channel](028)
 
 ### 029 [defer-panic-recover](029)

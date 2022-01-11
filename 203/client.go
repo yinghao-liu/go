@@ -14,7 +14,9 @@ import (
 
 // HTTP get
 func HttpGet(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	// 超时时间：5秒
+	client := &http.Client{Timeout: 5 * time.Second}
+	resp, err := client.Get(url)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
@@ -61,13 +63,13 @@ func HttpPostJSON(url string, data interface{}) ([]byte, error) {
 // http delete
 func HttpDelete(url string) ([]byte, error) {
 	fmt.Printf("HttpDelete %s\n", url)
-
+	client := &http.Client{Timeout: 5 * time.Second}
 	req, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
@@ -103,8 +105,9 @@ func HttpPutJSON(url string, data interface{}) ([]byte, error) {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
+	client := &http.Client{Timeout: 5 * time.Second}
 	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
