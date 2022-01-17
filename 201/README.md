@@ -15,7 +15,11 @@ version
 with date
 `go build -ldflags="-X main.Version=v1.0.0 -X 'main.date=$(date)'"`
 
+with subfolder
+`go build -ldflags="-X 'version/domain.DomainVersion=v1.0.0'"`
+
 ## reference
 
 1. [Using ldflags to Set Version Information for Go Applications](https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications)
 2. go doc cmd/link
+3. go help packages

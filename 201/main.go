@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"version/domain"
 )
 
 var Version = "Development"
@@ -12,4 +13,5 @@ func main() {
 	fmt.Println("Version:\t", Version)
 	fmt.Println("version:\t", version)
 	fmt.Println("date:\t", date)
+	fmt.Println("domain version:\t", domain.DomainVersion)
 }
