@@ -77,3 +77,5 @@ test go feature
 ## template
 
 ### 500 [DDD landing](500)
+
+### 501 [function extension - built-in or self-registering plugin](501)
