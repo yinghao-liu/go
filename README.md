@@ -48,6 +48,8 @@ test go feature
 
 ### 107 [runtime](107)
 
+### 108 [gin validator](108)
+
 ### 150 [ini](150)
 
 ### 151 [zap](151)
