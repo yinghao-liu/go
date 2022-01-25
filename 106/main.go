@@ -31,10 +31,11 @@ func main() {
 
 	var a, b, c, d byte
 	fmt.Sscanf("255.255.255.0", "%d.%d.%d.%d", &a, &b, &c, &d)
-	fmt.Printf("a is %v, b is %v\n", a, b)
+	fmt.Printf("a is %v, b is %v[%v][%v]\n", a, b, c, d)
 	mm := net.IPv4Mask(a, b, c, d)
+	fmt.Printf("mm is %v\n", mm)
 	m, n := mm.Size()
-	fmt.Printf("mm is %v,%v\n", m, n)
+	fmt.Printf("m,n is %v,%v\n", m, n)
 	fmt.Printf("---------IPtest------------\n")
 	IPtest()
 

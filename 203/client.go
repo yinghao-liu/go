@@ -18,7 +18,7 @@ func HttpGet(url string) ([]byte, error) {
 	client := &http.Client{Timeout: 5 * time.Second}
 	resp, err := client.Get(url)
 	if err != nil {
-		fmt.Printf("%s\n", err.Error())
+		fmt.Printf("HttpGet error:%s\n", err.Error())
 		return nil, err
 	}
 	fmt.Printf("status: %d\n", resp.StatusCode)
@@ -30,6 +30,7 @@ func HttpGet(url string) ([]byte, error) {
 	if resp.StatusCode == http.StatusOK {
 		return body, nil
 	} else {
+		fmt.Printf("HttpGet error status:%d, body:%s\n", resp.StatusCode, string(body))
 		return nil, errors.New(string(body))
 	}
 }
@@ -41,22 +42,23 @@ func HttpPostJSON(url string, data interface{}) ([]byte, error) {
 	client := &http.Client{Timeout: 5 * time.Second}
 	jsonStr, err := json.Marshal(data)
 	if err != nil {
-		fmt.Printf("%s\n", err.Error())
+		fmt.Printf("Marshal error %s\n", err.Error())
 		return nil, err
 	}
 	resp, err := client.Post(url, "application/json", bytes.NewBuffer(jsonStr))
 	if err != nil {
-		fmt.Printf("%s\n", err.Error())
+		fmt.Printf("HttpPostJSON error:%s\n", err.Error())
 		return nil, err
 	}
 	defer resp.Body.Close()
-	result, _ := io.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	if resp.StatusCode == 200 {
 		fmt.Println("ok")
-		return result, nil
+		return body, nil
 	} else {
-		return nil, errors.New(string(result))
+		fmt.Printf("HttpPostJSON error status:%d, body:%s\n", resp.StatusCode, string(body))
+		return nil, errors.New(string(body))
 	}
 }
 
@@ -77,22 +79,23 @@ func HttpDelete(url string) ([]byte, error) {
 	fmt.Printf("status: %d\n", resp.StatusCode)
 
 	defer resp.Body.Close()
-	result, err := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
 
 	if resp.StatusCode == http.StatusOK {
-		return result, nil
+		return body, nil
 	} else {
-		return nil, errors.New(string(result))
+		fmt.Printf("HttpDelete error status:%d, body:%s\n", resp.StatusCode, string(body))
+		return nil, errors.New(string(body))
 	}
 }
 
 // http put
 func HttpPutJSON(url string, data interface{}) ([]byte, error) {
-	fmt.Printf("HttpDelete %s\n", url)
+	fmt.Printf("HttpPutJSON %s\n", url)
 
 	jsonStr, err := json.Marshal(data)
 	if err != nil {
@@ -115,16 +118,17 @@ func HttpPutJSON(url string, data interface{}) ([]byte, error) {
 	fmt.Printf("status: %d\n", resp.StatusCode)
 
 	defer resp.Body.Close()
-	result, err := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Printf("%s\n", err.Error())
 		return nil, err
 	}
 
 	if resp.StatusCode == http.StatusOK {
-		return result, nil
+		return body, nil
 	} else {
-		return nil, errors.New(string(result))
+		fmt.Printf("HttpPutJSON error status:%d, body:%s\n", resp.StatusCode, string(body))
+		return nil, errors.New(string(body))
 	}
 }
 
@@ -181,10 +185,10 @@ func Get(url string) string {
 	}
 	defer resp.Body.Close()
 	var buffer [512]byte
-	result := bytes.NewBuffer(nil)
+	body := bytes.NewBuffer(nil)
 	for {
 		n, err := resp.Body.Read(buffer[0:])
-		result.Write(buffer[0:n])
+		body.Write(buffer[0:n])
 		if err != nil && err == io.EOF {
 			break
 		} else if err != nil {
@@ -192,7 +196,7 @@ func Get(url string) string {
 		}
 	}
 
-	return result.String()
+	return body.String()
 }
 
 // 不是很好的 发送POST请求示例
@@ -211,6 +215,6 @@ func Post(url string, data interface{}, contentType string) string {
 	}
 
 	defer resp.Body.Close()
-	result, _ := io.ReadAll(resp.Body)
-	return string(result)
+	body, _ := io.ReadAll(resp.Body)
+	return string(body)
 }

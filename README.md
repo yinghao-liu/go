@@ -50,6 +50,8 @@ test go feature
 
 ### 108 [gin validator](108)
 
+### 109 [plugin](109)
+
 ### 150 [ini](150)
 
 ### 151 [zap](151)
@@ -69,6 +71,8 @@ test go feature
 ### 205 [http server through net/http](205)
 
 ### 206 [HTTPProxy](206)
+
+### 206 [closed source module](206)
 
 ### 301 [uuser](301)
 
