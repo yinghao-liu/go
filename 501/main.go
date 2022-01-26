@@ -2,18 +2,20 @@ package main
 
 import (
 	"fmt"
+	_ "functionextension/module"
 )
 
 var T int64 = a()
 
 func init() {
-	fmt.Println("init in main.go ")
+	fmt.Println("main-- init in main.go ")
 }
 
 func a() int64 {
-	fmt.Println("calling a()")
+	fmt.Println("main-- calling a()")
 	return 2
 }
 func main() {
-	fmt.Println("calling main")
+	fmt.Println("main-- calling main")
+	//module.ModuleFun()
 }
