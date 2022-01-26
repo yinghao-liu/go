@@ -45,7 +45,7 @@ function extension - built-in or self-registering plugin
 
 go 的 init 函数可以很方便的实现扩展的 built-in 功能
 
-##### golang 程序初始化(参考3)
+##### golang 程序初始化(参考 3)
 
 > golang 程序初始化先于 main 函数执行，由 runtime 进行初始化，初始化顺序如下：
 >
@@ -57,8 +57,11 @@ go 的 init 函数可以很方便的实现扩展的 built-in 功能
 
 #### plugin
 
+使用 go 的 plugin 模块可以实现简单的动态加载，模块的生成见[plugins](109)
+
 ## reference
 
 1. [wireshark - How packet dissection works](https://www.wireshark.org/docs/wsdg_html_chunked/ChapterDissection.html#ChDissectWorks)
 2. [linux 的 initcall 机制](https://www.cnblogs.com/downey-blog/p/10486653.html)
-3. [golang的init函数](https://zhuanlan.zhihu.com/p/34211611)
+3. [golang 的 init 函数](https://zhuanlan.zhihu.com/p/34211611)
+4. [plugin](https://golang.google.cn/pkg/plugin/)

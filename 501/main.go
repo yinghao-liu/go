@@ -15,7 +15,9 @@ func a() int64 {
 	fmt.Println("main-- calling a()")
 	return 2
 }
+
 func main() {
 	fmt.Println("main-- calling main")
 	//module.ModuleFun()
+	plunginInit()
 }
