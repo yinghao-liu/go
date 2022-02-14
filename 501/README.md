@@ -57,7 +57,7 @@ go 的 init 函数可以很方便的实现扩展的 built-in 功能
 
 #### plugin
 
-使用 go 的 plugin 模块可以实现简单的动态加载，模块的生成见[plugins](109)
+使用 go 的 plugin 模块可以实现简单的动态加载，模块的生成见[plugins](../109)
 
 ## reference
 

@@ -8,9 +8,11 @@ import (
 )
 
 type Validator struct {
-	Mac   string `json:"mac" binding:"mac"`
-	Email string `json:"email" binding:"email"`
-	Ascii string `json:"ascii" binding:"min=6,max=10,printascii"`
+	Mac       string `json:"mac" binding:"mac"`
+	Email     string `json:"email" binding:"email"`
+	Ascii     string `json:"ascii" binding:"min=6,max=10,printascii"`
+	Number    int    `json:"number" binding:"required"`
+	NumberPtr *int   `json:"numberPtr" binding:"required"`
 }
 
 func servicePutValidator(c *gin.Context) {
@@ -23,13 +25,22 @@ func servicePutValidator(c *gin.Context) {
 	fmt.Printf("valid: %+v\n", valid)
 
 	c.Status(http.StatusOK)
-
 }
+
+func serviceGetValidator(c *gin.Context) {
+	var valid Validator
+	var a int
+	a = 12
+	valid.NumberPtr = &a
+	fmt.Printf("valid: %+v\n", valid)
+
+	c.JSON(http.StatusOK, valid)
+}
+
 func serviceVersionGet(c *gin.Context) {
-
 	c.Status(http.StatusOK)
-
 }
+
 func main() {
 
 	//gin.SetMode(gin.ReleaseMode)
@@ -39,8 +50,9 @@ func main() {
 	srv := r.Group("/service")
 	{
 		srv.PUT("/validator", servicePutValidator)
+		srv.GET("/validator", serviceGetValidator)
 		srv.GET("/version", serviceVersionGet)
 	}
 
-	r.Run(":8080")
+	r.Run(":10100")
 }
