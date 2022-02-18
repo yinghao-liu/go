@@ -1,11 +1,17 @@
 package main
 
 import (
+	"fmt"
 	st "structtest/struct"
 )
 
 // alias
 type BaseAlias st.Base2
+
+//
+type Name struct {
+	Name string
+}
 
 func main() {
 	var a st.BaseInfo
@@ -19,4 +25,9 @@ func main() {
 	// alias
 	//var b BaseAlias
 	//b.show() // b.show undefined (type Base2 has no field or method show)
+
+	var Name Name
+	Name.Name = "Name"
+	fmt.Printf("Name is %+v\n", Name)
+
 }
