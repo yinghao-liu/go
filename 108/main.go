@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 type Validator struct {
@@ -41,6 +42,16 @@ func serviceVersionGet(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
+func Validate(s interface{}) error {
+	validate := validator.New()
+	if errs := validate.Struct(s); errs != nil {
+		fmt.Println(errs)
+		return errs
+	} else {
+		fmt.Println(errs)
+	}
+	return nil
+}
 func main() {
 
 	//gin.SetMode(gin.ReleaseMode)
