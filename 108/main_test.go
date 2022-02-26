@@ -18,3 +18,29 @@ func TestValidate(t *testing.T) {
 	v.Numb = 2
 	Validate(v)
 }
+
+type Student struct {
+	Name string `validate:"len=7"`
+	Age  int    `validate:"min=18,max=30"`
+}
+type Worker struct {
+	Name   string   `validate:"len=7"`
+	Age    int      `validate:"min=25,max=30"`
+	Skills []string `validate:"min=25,max=30"`
+}
+
+type Human struct {
+	Profession string   `validate:"oneof=student worker"`
+	Stud       *Student `validate:"required_if=Profession student"` // only for struct pointer, required tag works
+	Work       *Worker  `validate:"required_if=Profession worker"`
+}
+
+func TestHuman(t *testing.T) {
+	var h Human
+	h.Profession = "student"
+	var stu Student
+	stu.Name = "francis"
+	stu.Age = 1
+	h.Stud = &stu
+	Validate(h)
+}
