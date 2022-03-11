@@ -1,4 +1,4 @@
-module ginValidator1
+module ginValidator
 
 go 1.16
 

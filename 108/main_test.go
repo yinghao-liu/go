@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 // 	Field Greater Than Another Field Only valid for Numbers, time.Duration and time.Time types
 type ValidateStruct struct {
@@ -43,4 +45,25 @@ func TestHuman(t *testing.T) {
 	stu.Age = 1
 	h.Stud = &stu
 	Validate(h)
+}
+
+type TV struct {
+	Size string `validate:"oneof=big small"`
+}
+type Fan struct {
+	Speed string `validate:"oneof=fast slow"`
+}
+
+type Suite struct {
+	SuiteType string `validate:"oneof=tv fan"`
+	TV        TV     `validate:"skip_unless=SuiteType tv"`
+	Fan       Fan    `validate:"skip_unless=SuiteType fan"`
+}
+
+func TestSuite(t *testing.T) {
+	var s Suite
+	s.SuiteType = "tv"
+	s.TV.Size = "big"
+
+	Validate(s)
 }

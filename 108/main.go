@@ -8,22 +8,29 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+type Computer struct {
+	CPU    string `json:"cpu"`
+	Memory string `json:"memory"`
+}
 type Validator struct {
-	Mac       string `json:"mac" binding:"mac"`
-	Email     string `json:"email" binding:"email"`
-	Ascii     string `json:"ascii" binding:"min=6,max=10,printascii"`
-	Number    int    `json:"number" binding:"required"`
-	NumberPtr *int   `json:"numberPtr" binding:"required"`
+	Mac       string   `json:"mac" binding:"mac"`
+	Email     string   `json:"email" binding:"email"`
+	Ascii     string   `json:"ascii" binding:"min=6,max=10,printascii"`
+	Number    int      `json:"number" binding:"required"`
+	NumberPtr *int     `json:"numberPtr" binding:"required"`
+	PC        Computer `json:"pc" `
 }
 
 func servicePutValidator(c *gin.Context) {
 	var valid Validator
+	valid.PC.CPU = "intel"
+	fmt.Printf("befor valid is: %+v\n", valid)
 	if err := c.ShouldBindJSON(&valid); err != nil {
 		fmt.Printf("valid: %+v\n", valid)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	fmt.Printf("valid: %+v\n", valid)
+	fmt.Printf("after valid is: %+v\n", valid)
 
 	c.Status(http.StatusOK)
 }
