@@ -16,6 +16,8 @@ test go feature
 
 ### 006 [cgo](006)
 
+### 007 [function](007)
+
 ### 028 [channel](028)
 
 ### 029 [defer-panic-recover](029)
