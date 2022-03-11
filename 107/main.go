@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"runtimetest/sub"
 )
 
 func FuncInfo() {
@@ -17,6 +18,11 @@ func FuncInfo() {
 
 }
 
+func Callers() {
+	sub.Sub()
+}
+
 func main() {
 	FuncInfo()
+	Callers()
 }
