@@ -22,7 +22,7 @@ func TestXxx(*testing.T)
 
 在test函数里，使用`T`的`Error`、`Errorf`、`Fail`、`FailNow`、`Failed`、`Fatal`、`Fatalf`等函数标记失败。
 
-
+`T.Log`函数
 
 
 
@@ -89,7 +89,42 @@ func FuzzXxx(*testing.F)
 
 
 
+## go test
 
+### 用法
+
+```shell
+go test [build/test flags] [packages] [build/test flags & test binary flags]
+```
+
+
+
+### 选项
+
+常见的选项如下
+
+| 选项          | 含义                                                         |
+| ------------- | ------------------------------------------------------------ |
+| -v            | 显示更多详细的信息                                           |
+| -bench regexp | 默认情况下，benchmark是不运行的<br />该选项指定了一个正则表达式，相符的benchmark会运行，如果要运行所有的<br />benchmark，使用'-bench .'或'-bench=.' |
+| -run regexp   | 只运行符合该正则表达式的                                     |
+|               |                                                              |
+| -cover        | 启用覆盖率分析<br />go test之后会出现覆盖率统计，例如<br />`coverage: 100.0% of statements` |
+|               |                                                              |
+
+以下选项可以在test过程中剖析相关信息
+
+| 选项                    | 含义                           |
+| ----------------------- | ------------------------------ |
+| -benchmem               | benchmark过程中的内存分配统计  |
+| -coverprofile cover.out | 将测试覆盖数据写到指定的文件里 |
+| -cpuprofile cpu.out     | 将CPU数据写到指定的文件里      |
+| -memprofile mem.out     | 将内存分配数据写到指定的文件里 |
+|                         |                                |
+|                         |                                |
+|                         |                                |
+|                         |                                |
+|                         |                                |
 
 
 
