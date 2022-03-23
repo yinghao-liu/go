@@ -6,7 +6,7 @@ test go feature
 
 ### 001 [slice](001)
 
-### 002 [maptest](002)
+### 002 [map](002)
 
 ### 003 [interface](003)
 
@@ -89,3 +89,5 @@ test go feature
 ### 500 [DDD landing](500)
 
 ### 501 [function extension - built-in or self-registering plugin](501)
+
+### 502 [gotest](502)
