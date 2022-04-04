@@ -1,6 +1,6 @@
 # go
 
-test go feature
+[conventions](conventions.md)
 
 ## language feature
 
@@ -54,6 +54,8 @@ test go feature
 
 ### 109 [plugin](109)
 
+### 110[errors](110)
+
 ### 150 [ini](150)
 
 ### 151 [zap](151)
@@ -86,7 +88,7 @@ test go feature
 
 ## template
 
-### 500 [DDD landing](500)
+### 500 [DDD](500)
 
 ### 501 [function extension - built-in or self-registering plugin](501)
 
