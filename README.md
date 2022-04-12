@@ -18,6 +18,8 @@
 
 ### 007 [function](007)
 
+### 008 [generics](008)
+
 ### 028 [channel](028)
 
 ### 029 [defer-panic-recover](029)
