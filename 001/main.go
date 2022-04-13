@@ -32,6 +32,32 @@ func array2slice() {
 	fmt.Printf("%v\n", s)
 }
 
+func Slices() {
+
+	var s []string
+	//s = make([]string, 2)
+	fmt.Printf("s is %v\n", s) // Println == %v
+	fmt.Printf("s is [%T]-[%v]-[%#v]-[%p]\n", s, s, s, s)
+	fmt.Println(s)
+	fmt.Printf("s is %p\n", s)
+	fmt.Printf("len(s) is %d\n", len(s))
+
+	//s[0] = "a" // panic: runtime error: index out of range [0] with length 0
+	s = append(s, "a")
+	fmt.Println(s)
+	fmt.Printf("s is [%T]-[%v]-[%#v]-[%p]\n", s, s, s, s)
+
+}
+func ForRange() {
+	var con []string
+	var strs = [...]string{"a", "b", "c", "d"}
+	for i, j := range strs {
+		fmt.Printf("i:%d,j:%s\n", i, j)
+		con = append(con, j)
+		fmt.Printf("con:%+v\n", con)
+	}
+}
+
 func main() {
 	sliceBymake()
 	sliceByappend()

@@ -17,3 +17,11 @@ func TestSlice(t *testing.T) {
 	fmt.Printf("333 %+v\n", arra)
 
 }
+func TestSlices(t *testing.T) {
+	Slices()
+
+}
+func TestForRange(t *testing.T) {
+	ForRange()
+
+}
