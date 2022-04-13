@@ -24,5 +24,6 @@ func Callers() {
 
 func main() {
 	FuncInfo()
+	fmt.Println("----------------------")
 	Callers()
 }

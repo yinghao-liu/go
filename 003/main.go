@@ -28,11 +28,11 @@ type Shaper interface {
 func typeTest() {
 	var any interface{}
 
-	fmt.Printf("'any' is [%T]-[%p]-[%p]\n", any, &any, any)
+	fmt.Printf("'any' is [%T]-[%T]-[%p]-[%p]\n", any, &any, &any, any)
 
 	sq1 := new(Square)
 	any = sq1
-	fmt.Printf("'any' is [%T]-[%p]-[%p]\n", any, &any, any)
+	fmt.Printf("'any' is [%T]-[%T]-[%p]-[%p]\n", any, &any, &any, any)
 
 	var sq2 Square
 	any = sq2
