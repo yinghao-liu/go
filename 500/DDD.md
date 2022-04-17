@@ -180,6 +180,22 @@ CatalogsGet 从面向对象角度来讲是catalogs对象获取其中参数
 
 
 
+## 设计步骤
+
+设计过程从架构图上看是一个由下到上，由内到外的过程，领域层是最先需要被确定的，边界一定要划分清楚
+
+1. 以领域对象为基础，首先设计领域层的聚合，例如
+
+![aggregat.jpg](image/aggregat.jpg)
+
+2. 根据需求确定需要的应用服务，并以API的形式提供
+
+
+
+
+
+
+
 ## FAQ
 
 1. 基础参数校验，业务参数校验，权限检查，入口记录和审计等在哪里做
@@ -198,6 +214,8 @@ CatalogsGet 从面向对象角度来讲是catalogs对象获取其中参数
    
 
 错误处理逻辑哪层处理   （返回到哪层）
+
+
 
 
 
@@ -311,22 +329,15 @@ UI DTO设计
 ## reference
 
 1. [Golang 项目架构](https://learnku.com/go/t/43569)
-
 2. [Go项目架构指南](https://cloud.tencent.com/developer/article/1624626)
-
 3. [go路线](https://learnku.com/articles/56078)
-
 4. [DDD-经典四层架构应用](https://blog.csdn.net/whos2016/article/details/103927879)
-
 5. [浅析VO、DTO、DO、PO的概念、区别和用处](https://www.cnblogs.com/qixuejia/p/4390086.html)
-
 6. [dao-repositories-and-services-in-ddd](https://stackoverflow.com/questions/19935773/dao-repositories-and-services-in-ddd)
-
 7. [DDD之4聚合和聚合根](https://zhuanlan.zhihu.com/p/146488464)
-
 8. [DDD领域驱动设计实战-理解聚合(Aggregate)和聚合根(AggregateRoot)](https://cloud.tencent.com/developer/article/1791310)
-
 9. [DDD理论学习系列——案例及目录](https://www.jianshu.com/p/6e2917551e63)
-
 10. [DDD—分层架构、洋葱架构、六边形架构](https://www.cnblogs.com/jiyukai/p/14830869.html)
+10. [RESTful API 规范](http://restful.p2hp.com/)
+10. 微服务架构设计模式 机械工业出版社
 
