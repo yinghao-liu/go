@@ -160,13 +160,19 @@ CatalogsGet 从面向对象角度来讲是catalogs对象获取其中参数
 
 ### 实体
 
+**Entity**
+
 实体是唯一的且可持续变化的。意思是说在实体的生命周期内，无论其如何变化，其仍旧是同一个实体。唯一性由唯一的身份标识来决定的。可变性也正反映了实体本身的状态和行为。
 
 持久化时可通过id被定位到
 
+？实体和实体之间的关系
+
 
 
 ### 值对象
+
+**Value Object**
 
 一个值附带操作方法，不可变。
 
@@ -176,7 +182,39 @@ CatalogsGet 从面向对象角度来讲是catalogs对象获取其中参数
 
 ### 聚合
 
+**Aggregate**
+
 聚合是领域对象的显式分组，旨在支持领域模型的行为和不变性，同时充当一致性和事务性边界。
+
+
+
+### 领域和子域
+
+领域是一个边界内的业务范围及其所进行的活动，然而，一个领域可能会涉及多个方面，那么就还需要将领域拆分，而不是一个领域模型完成所有领域功能。
+
+拆分的子域有以下几类：
+
+- 核心域（Core or Basic）
+- 支撑子域（Auxiliary or Support）
+- 通用子域（Generic）被用于整个业务系统，在最低层。目前不好分类的一些通用函数放在`utility`目录下（util）
+
+
+
+
+
+工厂
+
+**Factory**
+
+
+
+### 仓储
+
+**Repository**
+
+
+
+
 
 
 
@@ -286,46 +324,6 @@ UI DTO设计
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## reference
 
 1. [Golang 项目架构](https://learnku.com/go/t/43569)
@@ -340,4 +338,7 @@ UI DTO设计
 10. [DDD—分层架构、洋葱架构、六边形架构](https://www.cnblogs.com/jiyukai/p/14830869.html)
 10. [RESTful API 规范](http://restful.p2hp.com/)
 10. 微服务架构设计模式 机械工业出版社
+10. 实现领域驱动设计 电子工业出版社
+10. [domains-and-subdomains](https://thedomaindrivendesign.io/domains-and-subdomains)
+10. [domain-driven-design-ddd](https://www.geeksforgeeks.org/domain-driven-design-ddd/)
 
