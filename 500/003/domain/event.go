@@ -6,27 +6,27 @@ const (
 )
 
 // 观察者
-type Observer[E Events] interface {
-	Notify(ev E)
+type Observer[P EventParam] interface {
+	Notify(param P)
 }
 
 // 事件
-type Event[E Events] struct {
-	obs map[int]map[Observer[E]]int
+type Event[P EventParam] struct {
+	obs map[int]map[Observer[P]]int
 }
 
 // 订阅
-func (evt *Event[E]) Subscribe(evtype int, ob Observer[E]) {
+func (evt *Event[P]) Subscribe(evtype int, ob Observer[P]) {
 	if nil == evt.obs {
-		evt.obs = make(map[int]map[Observer[E]]int)
+		evt.obs = make(map[int]map[Observer[P]]int)
 	}
 	if nil == evt.obs[evtype] {
-		evt.obs[evtype] = make(map[Observer[E]]int)
+		evt.obs[evtype] = make(map[Observer[P]]int)
 	}
 }
 
 // 取消订阅
-func (evt *Event[E]) UnSubscribe(evtype int, ob Observer[E]) {
+func (evt *Event[P]) UnSubscribe(evtype int, ob Observer[P]) {
 	if nil == evt.obs {
 		return
 	}
@@ -34,12 +34,12 @@ func (evt *Event[E]) UnSubscribe(evtype int, ob Observer[E]) {
 }
 
 // 发布事件
-func (evt Event[E]) Publish(evtype int, ev E) {
+func (evt Event[P]) Publish(evtype int, param P) {
 	if nil == evt.obs {
 		return
 	}
 	for i, _ := range evt.obs[evtype] {
-		go i.Notify(ev)
+		go i.Notify(param)
 	}
 }
 
@@ -53,6 +53,6 @@ type EventCatalog struct {
 	name string
 }
 
-type Events interface {
+type EventParam interface {
 	EventItem | EventCatalog
 }
