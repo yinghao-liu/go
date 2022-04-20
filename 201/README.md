@@ -23,3 +23,4 @@ with subfolder
 1. [Using ldflags to Set Version Information for Go Applications](https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications)
 2. go doc cmd/link
 3. go help packages
+4. go help importpath
