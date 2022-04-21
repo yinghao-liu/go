@@ -15,6 +15,9 @@ func nilMap() {
 	for i, j := range a {
 		fmt.Printf("nilmap i:%v,j:%v\n", i, j)
 	}
+	fmt.Printf("nilmap retrieve\n")
+	avalue := a["a"] // ok avalue = 0(int())
+	fmt.Printf("nilmap retrieve avalue is %v\n", avalue)
 	fmt.Printf("nilmap assignment\n")
 	a["a"] = 1 // panic: assignment to entry in nil map
 	fmt.Printf("nilmap assignment a is %v\n", a)
