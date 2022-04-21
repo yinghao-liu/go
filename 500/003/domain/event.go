@@ -1,10 +1,5 @@
 package domain
 
-const (
-	EventItemAdded = iota + 1
-	EventItemDeleted
-)
-
 // 观察者
 type Observer[P EventParam] interface {
 	Notify(param P)
@@ -43,16 +38,6 @@ func (evt Event[P]) Publish(evtype int, param P) {
 	}
 }
 
-type EventItem struct {
-	id   string
-	name string
-}
-
-type EventCatalog struct {
-	id   string
-	name string
-}
-
 type EventParam interface {
-	EventItem | EventCatalog
+	EventItemParam | EventCatalogParam
 }
