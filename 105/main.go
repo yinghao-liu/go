@@ -22,6 +22,7 @@ func testReflect() {
 
 	fmt.Printf("%#v, %v\n", value, typ)
 	fmt.Printf("---------------\n")
+	fmt.Printf("value+v:%+v\n, value#v:%#v\n, type:%T\n", secret, secret, secret)
 	// alternative:
 	//typ := value.Type()  // main.NotknownType
 	knd := value.Kind() // struct
