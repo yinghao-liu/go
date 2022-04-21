@@ -22,3 +22,10 @@
 
 ## FAQ
 
+
+
+
+
+## reference
+
+1. [map types](https://golang.google.cn/ref/spec#Map_types)

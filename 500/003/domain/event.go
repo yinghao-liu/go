@@ -7,17 +7,18 @@ type Observer[P EventParam] interface {
 
 // 事件
 type Event[P EventParam] struct {
-	obs map[int]map[Observer[P]]int
+	obs map[int]map[Observer[P]]bool // set
 }
 
 // 订阅
 func (evt *Event[P]) Subscribe(evtype int, ob Observer[P]) {
 	if nil == evt.obs {
-		evt.obs = make(map[int]map[Observer[P]]int)
+		evt.obs = make(map[int]map[Observer[P]]bool)
 	}
 	if nil == evt.obs[evtype] {
-		evt.obs[evtype] = make(map[Observer[P]]int)
+		evt.obs[evtype] = make(map[Observer[P]]bool)
 	}
+	evt.obs[evtype][ob] = true
 }
 
 // 取消订阅
