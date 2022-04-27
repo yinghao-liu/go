@@ -6,7 +6,6 @@ import (
 )
 
 func TestNamedreturn(t *testing.T) {
-	a, b := Namedreturn()
-	fmt.Printf("a:%+v\n", a)
-	fmt.Printf("b:%+v\n", b)
+	a, err := Namedreturn()
+	fmt.Printf("end-- a is %d, err is %#v\n", a, err)
 }
