@@ -43,7 +43,7 @@ function extension - built-in or self-registering plugin
 
 #### built-in
 
-go 的 init 函数可以很方便的实现扩展的 built-in 功能
+go 的 init 函数可以很方便的实现扩展的 built-in 功能，详见[init](../030)
 
 #### plugin
 

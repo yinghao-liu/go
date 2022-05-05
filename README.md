@@ -16,7 +16,7 @@
 
 ### 006 [cgo](006)
 
-### 007 [function](007)
+### 007 [function and scope](007)
 
 ### 008 [generics](008)
 
