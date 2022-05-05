@@ -8,6 +8,9 @@ func init() {
 	fmt.Println("module-- init1 in module.go ")
 }
 func init() {
+	fmt.Println("module-- init3 in module.go ")
+}
+func init() {
 	fmt.Println("module-- init2 in module.go ")
 }
 

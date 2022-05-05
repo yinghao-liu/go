@@ -45,16 +45,6 @@ function extension - built-in or self-registering plugin
 
 go 的 init 函数可以很方便的实现扩展的 built-in 功能
 
-##### golang 程序初始化(参考 3)
-
-> golang 程序初始化先于 main 函数执行，由 runtime 进行初始化，初始化顺序如下：
->
-> 1. 初始化导入的包（包的初始化顺序并不是按导入顺序（“从上到下”）执行的，runtime 需要解析包依赖关系，没有依赖的包最先初始化，与变量初始化依赖关系类似，参见 golang 变量的初始化）；
-> 2. 初始化包作用域的变量（该作用域的变量的初始化也并非按照“从上到下、从左到右”的顺序，runtime 解析变量依赖关系，没有依赖的变量最先初始化，参见 golang 变量的初始化）；
-> 3. 执行包的 init 函数；
-
-当 import 一个模块时，首先会执行该模块的全局变量赋值操作，再执行模块里的所有 init 函数（模块内可存在多个 init 函数）
-
 #### plugin
 
 使用 go 的 plugin 模块可以实现简单的动态加载，模块的生成见[plugins](../109)
@@ -63,5 +53,4 @@ go 的 init 函数可以很方便的实现扩展的 built-in 功能
 
 1. [wireshark - How packet dissection works](https://www.wireshark.org/docs/wsdg_html_chunked/ChapterDissection.html#ChDissectWorks)
 2. [linux 的 initcall 机制](https://www.cnblogs.com/downey-blog/p/10486653.html)
-3. [golang 的 init 函数](https://zhuanlan.zhihu.com/p/34211611)
-4. [plugin](https://golang.google.cn/pkg/plugin/)
+3. [plugin](https://golang.google.cn/pkg/plugin/)

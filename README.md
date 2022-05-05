@@ -24,6 +24,8 @@
 
 ### 029 [defer-panic-recover](029)
 
+### 030 [init](030)
+
 ## diagnostics
 
 ### 090 [Profiling](090)
