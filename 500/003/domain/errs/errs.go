@@ -24,7 +24,7 @@ const (
 	ErrorParamInvalid = ErrorCodeStart + iota // 无效参数
 
 	// HTTP 404类
-	ErrorResourceNotExist // 资源不存在
+	ErrorResourceNotFound // 资源未找到
 
 	ErrorResourceIsExist    // 资源已存在，不允许重复添加
 	ErrorCapNotSupport      // 能力不支持
@@ -37,7 +37,7 @@ const (
 
 var errorText = map[int]string{
 	ErrorParamInvalid:       "Param Invalid",
-	ErrorResourceNotExist:   "Resource Not Exist",
+	ErrorResourceNotFound:   "Resource Not Found",
 	ErrorResourceIsExist:    "ErrorResource Is Exist",
 	ErrorCapNotSupport:      "cap Not Support",
 	ErrorDatabaseError:      "Database Error",
@@ -57,17 +57,21 @@ func ErrorCodeList() {
 		fmt.Printf("%d:%s\n", i, j)
 	}
 }
-func ErrorCodeNew(code int, msg string) *ErrorCode {
-	util.CallStack()
 
-	return &ErrorCode{code, msg}
+func ErrorCodeNew(code int, msg string) (err *ErrorCode) {
+	err = &ErrorCode{code, msg}
+	fmt.Printf("code:%d, msg:%s\n", code, msg)
+	util.CallStack()
+	return
 }
 
 // 不具体说明message时使用默认的
-func ErrorCodeDefault(code int) *ErrorCode {
+func ErrorCodeDefault(code int) (err *ErrorCode) {
+	msg := ErrorText(code)
+	err = &ErrorCode{code, msg}
+	fmt.Printf("code:%d default msg:%s\n", code, msg)
 	util.CallStack()
-
-	return &ErrorCode{code, ErrorText(code)}
+	return
 }
 
 func (e ErrorCode) Error() ErrorCode {

@@ -2,17 +2,17 @@ package main
 
 import (
 	"ddd/domain"
-	mem "ddd/infrastructure/memory"
+	repomem "ddd/infrastructure/repomemory"
 )
 
 func itermInit() {
-	its := new(mem.ItemsMemory)
+	its := new(repomem.ItemsMemory)
 	its.Init()
 	domain.ItemsRepo = its
 }
 
 func catalogInit() {
-	cats := new(mem.CatalogsMemory)
+	cats := new(repomem.CatalogsMemory)
 	cats.Init()
 	domain.CatalogsRepo = cats
 }

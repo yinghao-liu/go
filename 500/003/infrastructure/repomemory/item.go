@@ -1,4 +1,4 @@
-package mem
+package repomem
 
 import (
 	"ddd/domain/errs"
@@ -18,7 +18,7 @@ func (its *ItemsMemory) Init() {
 func (its ItemsMemory) Get(id string) (it item.Item, err errs.ErrorCoder) {
 	it, exist := its.repo[id]
 	if !exist {
-		err = errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		err = errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	return
 }
@@ -35,7 +35,7 @@ func (its *ItemsMemory) Add(it item.Item) errs.ErrorCoder {
 func (its *ItemsMemory) Update(id string, it item.Item) errs.ErrorCoder {
 	_, exist := its.repo[it.ID]
 	if !exist {
-		return errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		return errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	its.repo[it.ID] = it
 	return nil
@@ -44,7 +44,7 @@ func (its *ItemsMemory) Update(id string, it item.Item) errs.ErrorCoder {
 func (its *ItemsMemory) Save(id string, it item.Item) errs.ErrorCoder {
 	_, exist := its.repo[it.ID]
 	if !exist {
-		return errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		return errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	its.repo[it.ID] = it
 	return nil

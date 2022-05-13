@@ -1,5 +1,6 @@
 package util
 
+// 通用域
 import (
 	"fmt"
 	"runtime"

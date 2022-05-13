@@ -1,4 +1,4 @@
-package mem
+package repomem
 
 import (
 	cata "ddd/domain/catalog"
@@ -17,7 +17,7 @@ func (cts *CatalogsMemory) Init() {
 func (cts CatalogsMemory) Get(id string) (ct cata.Catalog, err errs.ErrorCoder) {
 	ct, exist := cts.repo[id]
 	if !exist {
-		err = errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		err = errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	return
 }
@@ -33,7 +33,7 @@ func (cts *CatalogsMemory) Add(ct cata.Catalog) errs.ErrorCoder {
 func (cts *CatalogsMemory) Update(id string, ct cata.Catalog) errs.ErrorCoder {
 	it, exist := cts.repo[ct.ID]
 	if !exist {
-		return errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		return errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	cts.repo[it.ID] = it
 	return nil
@@ -42,7 +42,7 @@ func (cts *CatalogsMemory) Update(id string, ct cata.Catalog) errs.ErrorCoder {
 func (cts *CatalogsMemory) Save(id string, ct cata.Catalog) errs.ErrorCoder {
 	it, exist := cts.repo[ct.ID]
 	if !exist {
-		return errs.ErrorCodeDefault(errs.ErrorResourceNotExist)
+		return errs.ErrorCodeDefault(errs.ErrorResourceNotFound)
 	}
 	cts.repo[it.ID] = it
 	return nil
