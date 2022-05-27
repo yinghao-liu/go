@@ -17,7 +17,13 @@ func TestGormodelFind(t *testing.T) {
 	GormodelInit()
 	GormodelFind()
 }
+func TestGormodelDelete(t *testing.T) {
+	inf.GormInit()
+	StudentInit()
+	StudentCreate()
+	StudentDelete()
 
+}
 func TestGormodelCreateV2(t *testing.T) {
 	inf.GormInit()
 	GormodelInit()

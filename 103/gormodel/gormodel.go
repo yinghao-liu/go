@@ -6,6 +6,9 @@ import (
 	"errors"
 	"fmt"
 	inf "gormtest/infrastructure"
+
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 // 用户模型
@@ -33,6 +36,7 @@ type Gormodel struct {
 }
 
 type Student struct {
+	gorm.Model
 	Name   string
 	Age    int
 	Gender string
@@ -61,6 +65,39 @@ func ConventionsColumnNameRetrieve() {
 	var u User
 	inf.GormDB.Debug().Table("users").First(&u)
 	fmt.Printf("%+v\n", u)
+}
+
+/*********************************************student********************************************************/
+// 初始化
+func StudentInit() {
+	inf.GormDB.AutoMigrate(&Student{})
+}
+
+// 创建
+func StudentCreate() {
+	var stu Student
+	stu.Name = "francis"
+	stu.Age = 18
+	stu.Gender = "male"
+
+	inf.GormDB.Debug().Create(&stu)
+	fmt.Printf("stu is %#v\n", stu)
+}
+
+// delete
+func StudentDelete() {
+	// 返回所有列  sqlite不支持
+	var stu []Student
+	inf.GormDB.Clauses(clause.Returning{}).Debug().Where("name = ?", "francis").Delete(&stu)
+	// DELETE FROM `users` WHERE role = "admin" RETURNING *
+	// users => []User{{ID: 1, Name: "jinzhu", Role: "admin", Salary: 100}, {ID: 2, Name: "jinzhu.2", Role: "admin", Salary: 1000}}
+	fmt.Printf("stu is %#v\n", stu)
+	// 返回指定的列
+	//inf.GormDB.Clauses(clause.Returning{Columns: []clause.Column{{Name: "name"}, {Name: "salary"}}}).Where("role = ?", "admin").Debug().Delete(&users)
+	// DELETE FROM `users` WHERE role = "admin" RETURNING `name`, `salary`
+	// users => []User{{ID: 0, Name: "jinzhu", Role: "", Salary: 100}, {ID: 0, Name: "jinzhu.2", Role: "", Salary: 1000}}
+
+	//inf.GormDB.Debug().Find(&model)
 }
 
 /***************************************Gormodel with type-byte************************************************/
@@ -157,7 +194,6 @@ func GormodelFindV2() {
 	default:
 		fmt.Printf("type is %T\n", t)
 	}
-
 }
 
 /*************************************Compatible***************************************/
