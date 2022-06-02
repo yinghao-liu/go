@@ -30,5 +30,4 @@ func main() {
 	load(fun3)
 
 	load1(fun1)
-
 }

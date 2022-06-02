@@ -17,3 +17,14 @@ func TestScopeTest(t *testing.T) {
 	ScopeGlobalAssign()
 	ScopeGlobal()
 }
+
+func TestVarArg(t *testing.T) {
+	var slc = []int{1, 2, 3}
+	//VarArgs("aa", slc)   // cannot use slc (variable of type []int) as int value in argument to VarArgs
+	SliceArgs("aa", slc) // OK
+
+	VarArgs("aa", 1, 2, 3) // ok
+	//SliceArgs("aa", 1, 2, 3) // too many arguments in call to SliceArgs	have(string, number, number, number) want(string, []int)
+
+	VarArgs("aa", slc...) // OK
+}
