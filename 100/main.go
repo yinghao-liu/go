@@ -13,9 +13,14 @@ func urlGenerate() {
 	//a.RawPath = url.PathEscape("/v1/account?a=b")
 
 	q := a.Query()
-	q.Add("aaa", "bbb")
+	q.Add("aaa", "b#bb")
 	a.RawQuery = q.Encode()
-	fmt.Printf("url is %s\n", a.String())
+	fmt.Printf("---url is %s\n", a.String())
+	raw, err := url.PathUnescape(a.String())
+	if nil != err {
+		fmt.Printf("err is %s\n", err.Error())
+	}
+	fmt.Printf("---url raw is %s\n", raw)
 
 }
 
