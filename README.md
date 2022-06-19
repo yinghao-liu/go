@@ -94,6 +94,8 @@
 
 ### 209 [websocket](209)
 
+### 210 [bmp](210)
+
 ### 301 [uuser](301)
 
 ### 302 [file up-download](302)
