@@ -28,3 +28,11 @@ func TestScope(t *testing.T) {
 	fmt.Printf("public.PublicMem:%s\n", sub.PublicMem)
 	// fmt.Printf("private.privateMem:%s\n", sub.privateMem) // sub.privateMem undefined
 }
+
+func TestScopeTest(t *testing.T) {
+	scope.ScopeAndMultiAssign()
+	scope.ScopeGlobal()
+	fmt.Printf("-----------------------\n")
+	scope.ScopeGlobalAssign()
+	scope.ScopeGlobal()
+}

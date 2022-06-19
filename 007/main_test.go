@@ -10,14 +10,6 @@ func TestNamedreturn(t *testing.T) {
 	fmt.Printf("end-- a is %d, err is %#v\n", a, err)
 }
 
-func TestScopeTest(t *testing.T) {
-	ScopeAndMultiAssign()
-	ScopeGlobal()
-	fmt.Printf("-----------------------\n")
-	ScopeGlobalAssign()
-	ScopeGlobal()
-}
-
 func TestVarArg(t *testing.T) {
 	var slc = []int{1, 2, 3}
 	//VarArgs("aa", slc)   // cannot use slc (variable of type []int) as int value in argument to VarArgs
