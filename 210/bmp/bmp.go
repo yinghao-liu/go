@@ -12,7 +12,7 @@ type header struct {
 	width           uint32 // 宽
 	height          uint32 // 高
 	colorPlane      uint16 //
-	bpp             uint16
+	bpp             uint16 // 每像素的比特数Bits Per Pixel
 	compression     uint32
 	imageSize       uint32
 	xPixelsPerMeter uint32
