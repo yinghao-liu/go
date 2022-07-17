@@ -64,6 +64,14 @@
 
 ### 112 [image](112)
 
+### 113 [base64](113)
+
+### 114 [flag](114)
+
+### 115 [time](115)
+
+### 116 [os](116)
+
 ---
 
 ### 150 [ini](150)
@@ -109,3 +117,5 @@
 ### 501 [function extension - built-in or self-registering plugin](501)
 
 ### 502 [gotest](502)
+
+### 503 [consul](503)

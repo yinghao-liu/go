@@ -61,6 +61,14 @@ func bitmap16(path string) {
 	saveBmp(path, plt)
 }
 
+// 16色
+func drawBitmap16(path string) {
+	plt := image.NewPaletted(image.Rect(0, 0, 1920, 1080), color16)
+	img, _ := readBmp("1234.bmp")
+	draw.Draw(plt, img.Bounds(), img, image.Pt(0, 0), draw.Over)
+	saveBmp(path, plt)
+}
+
 // RGBA
 func truecolor(path string) {
 	rgb := image.NewRGBA(image.Rect(0, 0, 32, 32))

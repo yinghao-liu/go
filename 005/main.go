@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	st "structtest/struct"
 )
 
@@ -29,5 +30,24 @@ func main() {
 	var Name Name
 	Name.Name = "Name"
 	fmt.Printf("Name is %+v\n", Name)
+	var intvalue int
+	//var c interface{} = &intvalue
+	tt := reflect.TypeOf(intvalue)
+	fmt.Println(tt)
+
+	/*************************************/
+	type S struct {
+		F string `species:"gopher" color:"blue"`
+	}
+
+	s := S{}
+	st := reflect.TypeOf(s)
+	field := st.Field(0)
+	fmt.Println(field.Tag.Get("color"), field.Tag.Get("species"))
+
+	/***********************/
+	type S struct {
+		F string `species:"gopher" color:"blue"`
+	}
 
 }
