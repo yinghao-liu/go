@@ -72,6 +72,8 @@
 
 ### 116 [os](116)
 
+### 117 [syscall](117)
+
 ---
 
 ### 150 [ini](150)
@@ -110,12 +112,18 @@
 
 ### 303 [uuser and file up-download integration without API gateway ](303)
 
+### 304 [consul](304)
+
 ## template
 
 ### 500 [DDD](500)
 
 ### 501 [function extension - built-in or self-registering plugin](501)
 
-### 502 [gotest](502)
+### 502 [go test](502)
 
-### 503 [consul](503)
+### 503 [go doc](503)
+
+### 510 [pkg.go.dev](510)
+
+### 511 [multi-module workspaces](https://golang.google.cn/doc/tutorial/workspaces)
