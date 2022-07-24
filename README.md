@@ -126,4 +126,4 @@
 
 ### 510 [pkg.go.dev](510)
 
-### 511 [multi-module workspaces](https://golang.google.cn/doc/tutorial/workspaces)
+### 511 [multi-module workspaces](511)
