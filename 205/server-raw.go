@@ -6,10 +6,10 @@ import (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, `{"Code":0,"Message":"Success","RequestID":"1234-5678-90","PublisherList":[]}`)
+	fmt.Fprintln(w, `{"Code":0,"Message":"Success"}`)
 }
 
 func main() {
-	http.HandleFunc("/decoder/publisher", IndexHandler)
+	http.HandleFunc("/httpraw/test", IndexHandler)
 	http.ListenAndServe(":8000", nil)
 }
