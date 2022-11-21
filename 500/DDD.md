@@ -40,6 +40,19 @@ type ErrorCode struct {
 
 ## 概念
 
+> DDD最大的好处是：接触到需求第一步就是考虑领域模型，而不是将其切割成数据和行为，然后数据用数据库实现，行为使用服务实现，最后造成需求的首肢分离。DDD让你首先考虑的是业务语言，而不是数据。**DDD强调业务抽象和面向对象编程，而不是过程式业务逻辑实现。**重点不同导致编程世界观不同。
+
+> 1.面向对象设计，数据行为绑定，告别贫血模型。
+> 2.优先考虑领域模型，而不是切割数据和行为。
+> 3.业务语义显性化，准确传达业务规则。
+> 4.代码即设计，通过领域设计即可很清晰的实现代码。
+> 5.它通过边界划分将复杂业务领域简单化，帮我们设计出清晰的领域和应用边界，可以很容易地实现业务和技术统一的架构演进。
+
+> 领域驱动设计，又称"软件核心复杂性应对之道"。是一套基于对象思维的业务建模设计思想，相对于 CRUD 系统有更高的灵活性，是业务人员处理复杂问题的有效手段。
+> ————————————————
+> 版权声明：本文为CSDN博主「靖节先生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+> 原文链接：https://blog.csdn.net/m0_37583655/article/details/117565641
+
 领域驱动自己理解的是：带有明确边界的、以业务领域驱动的设计模型。
 
 仓储：定义在领域层，实现在基础设施层（需要依赖倒置）
@@ -52,7 +65,7 @@ type ErrorCode struct {
 
 ## 用户界面层-interface
 
-负责外部数据到内部数据的转换，包括通信机制（RESTful，gRPC等）和数据形式（JSON，XML等）
+负责外部数据到内部数据的转换，包括通信机制（RESTful，gRPC等）和数据形式（JSON，XML等），需要考虑到不同形式间的可替换性，或者共存。
 
 使用的数据为：
 
@@ -60,7 +73,7 @@ type ErrorCode struct {
 
 > 泛指用于展示层与服务层之间的数据传输对象
 
-
+> 用户界面层只用于处理用户显示和用户请求，它不应该包含领域或业务逻辑。用户界面所进行的验证和对领域模型的验证是不同的。
 
 TODO: 数据复用问题
 
@@ -99,6 +112,10 @@ TODO: 数据复用问题
 不应该存在DO不需要的DTO数据字段，若存在需要修改API的定义
 
 如果存在DO需要但是DTO没有的数据字段（可通过其他字段经过转化或计算得到）的，还比如id
+
+> 应用服务和领域服务是不同的，因此领域逻辑也不应该出现在应用服务中。应用服务可以用于控制持久化事务和安全认证，或者向其他系统发送基于时间的消息通知，它主要用于协调对领域对象（比如聚合）的操作，同时，应用服务是表达用例和用户故事的主要手段。其主要用途是：接收来自用户界面的输入参数，再通过资源库获取到聚合实例，然后执行响应的命令操作。
+
+
 
 
 
@@ -340,9 +357,10 @@ UI DTO设计
 8. [DDD领域驱动设计实战-理解聚合(Aggregate)和聚合根(AggregateRoot)](https://cloud.tencent.com/developer/article/1791310)
 9. [DDD理论学习系列——案例及目录](https://www.jianshu.com/p/6e2917551e63)
 10. [DDD—分层架构、洋葱架构、六边形架构](https://www.cnblogs.com/jiyukai/p/14830869.html)
-10. [RESTful API 规范](http://restful.p2hp.com/)
-10. 微服务架构设计模式 机械工业出版社
-10. 实现领域驱动设计 电子工业出版社
-10. [domains-and-subdomains](https://thedomaindrivendesign.io/domains-and-subdomains)
-10. [domain-driven-design-ddd](https://www.geeksforgeeks.org/domain-driven-design-ddd/)
+11. [RESTful API 规范](http://restful.p2hp.com/)
+12. 微服务架构设计模式 机械工业出版社
+13. 实现领域驱动设计 电子工业出版社
+14. [domains-and-subdomains](https://thedomaindrivendesign.io/domains-and-subdomains)
+15. [domain-driven-design-ddd](https://www.geeksforgeeks.org/domain-driven-design-ddd/)
+16. [DDD领域驱动设计详解](https://blog.csdn.net/m0_37583655/article/details/117565641)
 

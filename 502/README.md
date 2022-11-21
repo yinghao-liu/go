@@ -46,6 +46,29 @@ func BenchmarkRandInt(b *testing.B) {
 
 benchmark函数必须执行`b.N`次，它能够自适应以被察觉到的次数。
 
+benchmark的输入如下
+
+```sh
+$ go test -run ^$ -bench BenchmarkRandInt -benchmem
+goos: windows
+goarch: amd64
+pkg: gotest
+cpu: Intel(R) Core(TM) i7-8500 CPU @ 3.80GHz
+BenchmarkRandInt-6      19528102                53.73 ns/op            8 B/op          1 allocs/op
+PASS
+ok      gotest  1.317s
+```
+
+其中的最终统计信息
+
+```sh
+BenchmarkRandInt-6      19528102                53.73 ns/op            8 B/op          1 allocs/op
+```
+
+分别是Benchmark名、总执行次数、每次执行耗时、每次执行使用堆内存、每次执行申请内存次数
+
+
+
 
 
 

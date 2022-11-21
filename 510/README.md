@@ -1,6 +1,8 @@
-# 501
+# 510
 
-pkg.go.dev
+pkg.go.dev and layout
+
+go 布局参考[go project layout](https://github.com/golang-standards/project-layout)，目录均使用单数形式。
 
 ## reference
 
