@@ -20,6 +20,8 @@
 
 ### 008 [generics](008)
 
+### 009 [set with map](009)
+
 ### 028 [channel](028)
 
 ### 029 [defer-panic-recover](029)
@@ -37,6 +39,8 @@
 ### 093 [Runtime statistics and events](093)
 
 ## packages
+
+standard
 
 ### 100 [url](100)
 
@@ -74,13 +78,19 @@
 
 ### 117 [syscall](117)
 
+### 118 [xml](118)
+
 ---
+
+external
 
 ### 150 [ini](150)
 
 ### 151 [zap](151)
 
 ### 152 [freetype](152)
+
+### 153 [yaml](153)
 
 ## applications
 
@@ -90,7 +100,7 @@
 
 ### 202 [http server through gin form/multipart](202)
 
-### 203 [http client methord encapsulation](203)
+### 203 [http client method encapsulation](203)
 
 ### 204 [http server through gin](204)
 
@@ -124,6 +134,6 @@
 
 ### 503 [go doc](503)
 
-### 510 [pkg.go.dev](510)
+### 510 [pkg.go.dev and layout](510)
 
 ### 511 [multi-module workspaces](511)
